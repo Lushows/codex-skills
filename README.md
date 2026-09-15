@@ -2,6 +2,17 @@
 
 18 skills propias, listas para instalar en cualquier equipo.
 
+## Antes de empezar
+
+En el equipo nuevo necesitas dos cosas ya instaladas:
+
+1. **Codex CLI** (o Claude Code). Este repo solo copia archivos; no instala el programa.
+2. **git** — para comprobar, abre una terminal y escribe `git --version`.
+   Si dice "no se reconoce", bajalo de https://git-scm.com/downloads
+   (o usa la via del ZIP, mas abajo).
+
+Como el repo es **privado**, al clonar te va a pedir tu cuenta de GitHub (Lushows).
+
 ## Instalar
 
 ### Windows
@@ -25,6 +36,27 @@ pides coincide con su descripcion (no hay que invocarlas a mano).
 
 > El instalador **sobrescribe** una skill del mismo nombre que ya exista.
 > Este repo es la fuente de verdad. Si cambiaste algo en el otro equipo, subelo aqui primero.
+
+### Sin git: descargar el ZIP
+
+1. Arriba en esta pagina: boton verde **Code** -> **Download ZIP**.
+2. Descomprimelo completo (no ejecutes nada desde dentro del ZIP).
+3. Entra a la carpeta y corre el instalador que te toque (`instalar.ps1` o `instalar.sh`).
+
+## Como saber si funciono
+
+Abre Codex y pide algo que dispare una skill, por ejemplo:
+
+> "arma el modelo financiero de un negocio de X"  -> deberia entrar `economist_lushows`
+
+Si no pasa nada, revisa que las carpetas esten donde van:
+
+```bash
+ls ~/.codex/skills        # Mac / Linux
+dir $HOME\.codex\skills   # Windows PowerShell
+```
+
+Deberias ver 18 carpetas, cada una con su `SKILL.md` adentro.
 
 ### A mano (si prefieres)
 
