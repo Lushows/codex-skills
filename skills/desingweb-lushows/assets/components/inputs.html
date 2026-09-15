@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inputs — DW Components</title>
+<style>
+  :root{
+    --dw-bg:#0A0A0F;
+    --dw-surface:#14141C;
+    --dw-surface-2:#1C1C28;
+    --dw-text:#E8E8F0;
+    --dw-text-dim:#9A9AB0;
+    --dw-accent:#34D399;
+    --dw-accent-soft:#6EE7B7;
+    --dw-ring:#6EE7B7;
+    --dw-border:rgba(255,255,255,.1);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--dw-bg);color:var(--dw-text);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:48px 24px;
+  }
+  .dw-wrap{max-width:520px;margin:0 auto}
+  h1{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px}
+  .dw-sub{color:var(--dw-text-dim);font-size:14px;margin-bottom:36px}
+
+  /* Floating label field */
+  .dw-field{position:relative;margin-bottom:26px}
+  .dw-field__control{
+    width:100%;font:inherit;font-size:15px;color:var(--dw-text);
+    background:var(--dw-surface);
+    border:1px solid var(--dw-border);border-radius:12px;
+    padding:22px 14px 8px;
+    transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+    appearance:none;-webkit-appearance:none;
+  }
+  textarea.dw-field__control{min-height:120px;resize:vertical;line-height:1.5}
+  .dw-field__control::placeholder{color:transparent}
+  .dw-field__control:hover{border-color:rgba(255,255,255,.2)}
+  .dw-field__control:focus{
+    outline:none;border-color:var(--dw-accent);
+    background:var(--dw-surface-2);
+    box-shadow:0 0 0 3px rgba(52,211,153,.18);
+  }
+
+  .dw-field__label{
+    position:absolute;left:15px;top:16px;
+    font-size:15px;color:var(--dw-text-dim);pointer-events:none;
+    transition:top .15s ease,font-size .15s ease,color .15s ease,transform .15s ease;
+    transform-origin:left top;
+  }
+  /* Lift label when focused or filled */
+  .dw-field__control:focus + .dw-field__label,
+  .dw-field__control:not(:placeholder-shown) + .dw-field__label{
+    top:8px;font-size:11.5px;letter-spacing:.02em;color:var(--dw-accent-soft);
+  }
+  /* Select always shows a value -> keep label lifted */
+  select.dw-field__control + .dw-field__label{top:8px;font-size:11.5px;color:var(--dw-text-dim)}
+  select.dw-field__control:focus + .dw-field__label{color:var(--dw-accent-soft)}
+  select.dw-field__control{padding-top:22px;cursor:pointer}
+
+  /* Custom select chevron */
+  .dw-field--select::after{
+    content:"";position:absolute;right:16px;top:50%;width:9px;height:9px;
+    border-right:2px solid var(--dw-text-dim);border-bottom:2px solid var(--dw-text-dim);
+    transform:translateY(-70%) rotate(45deg);pointer-events:none;
+  }
+
+  .dw-hint{font-size:12px;color:var(--dw-text-dim);margin:6px 2px 0}
+</style>
+</head>
+<body>
+<div class="dw-wrap">
+  <h1>Inputs</h1>
+  <p class="dw-sub">Text, textarea y select con label flotante y foco estilizado en esmeralda.</p>
+
+  <form>
+    <!-- Text -->
+    <div class="dw-field">
+      <input class="dw-field__control" id="dw-name" type="text" placeholder="Nombre completo" autocomplete="name">
+      <label class="dw-field__label" for="dw-name">Nombre completo</label>
+    </div>
+
+    <!-- Email -->
+    <div class="dw-field">
+      <input class="dw-field__control" id="dw-email" type="email" placeholder="Correo" autocomplete="email">
+      <label class="dw-field__label" for="dw-email">Correo electrónico</label>
+      <p class="dw-hint">Te enviaremos la confirmación del pedido aquí.</p>
+    </div>
+
+    <!-- Textarea -->
+    <div class="dw-field">
+      <textarea class="dw-field__control" id="dw-msg" placeholder="Mensaje"></textarea>
+      <label class="dw-field__label" for="dw-msg">Mensaje o notas del pedido</label>
+    </div>
+
+    <!-- Select -->
+    <div class="dw-field dw-field--select">
+      <select class="dw-field__control" id="dw-prod">
+        <option value="melena">Melena de León</option>
+        <option value="cordyceps">Cordyceps Militaris</option>
+        <option value="ganoderma">Ganoderma (Reishi)</option>
+      </select>
+      <label class="dw-field__label" for="dw-prod">Producto de interés</label>
+    </div>
+  </form>
+</div>
+</body>
+</html>

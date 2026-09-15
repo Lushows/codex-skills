@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cards — DW Components</title>
+<style>
+  :root{
+    --dw-bg:#0A0A0F;
+    --dw-surface:#14141C;
+    --dw-surface-2:#1C1C28;
+    --dw-text:#E8E8F0;
+    --dw-text-dim:#9A9AB0;
+    --dw-accent:#34D399;
+    --dw-accent-soft:#6EE7B7;
+    --dw-ring:#6EE7B7;
+    --dw-border:rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--dw-bg);color:var(--dw-text);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:48px 24px;
+  }
+  .dw-wrap{max-width:1040px;margin:0 auto}
+  h1{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px}
+  .dw-sub{color:var(--dw-text-dim);font-size:14px;margin-bottom:40px}
+  .dw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+
+  /* Base card */
+  .dw-card{
+    background:var(--dw-surface);
+    border:1px solid var(--dw-border);
+    border-radius:16px;padding:24px;
+    display:flex;flex-direction:column;gap:12px;
+    transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+  }
+  .dw-card:focus-within{
+    outline:none;border-color:rgba(110,231,183,.5);
+    box-shadow:0 0 0 2px var(--dw-bg),0 0 0 4px var(--dw-ring);
+  }
+  .dw-card__tag{
+    align-self:flex-start;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--dw-accent-soft);background:rgba(52,211,153,.1);
+    padding:5px 10px;border-radius:999px;
+  }
+  .dw-card__title{font-size:18px;font-weight:700;margin:0;letter-spacing:-.01em}
+  .dw-card__text{font-size:14px;line-height:1.55;color:var(--dw-text-dim);margin:0}
+  .dw-card__link{
+    margin-top:auto;align-self:flex-start;color:var(--dw-accent);font-size:14px;font-weight:600;
+    text-decoration:none;display:inline-flex;align-items:center;gap:6px;border-radius:6px;
+  }
+  .dw-card__link:hover{color:var(--dw-accent-soft)}
+  .dw-card__link:focus-visible{outline:none;box-shadow:0 0 0 2px var(--dw-bg),0 0 0 4px var(--dw-ring)}
+
+  /* Card with image (CSS gradient placeholder) */
+  .dw-card--media{padding:0;overflow:hidden}
+  .dw-card--media .dw-card__body{padding:24px;display:flex;flex-direction:column;gap:12px}
+  .dw-card__media{
+    height:160px;
+    background:
+      radial-gradient(120% 120% at 20% 10%,rgba(110,231,183,.55),transparent 55%),
+      linear-gradient(135deg,#0d2b22,#103a2c 45%,#0b1a26);
+    position:relative;
+  }
+  .dw-card__media::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 50%,rgba(10,10,15,.6));
+  }
+
+  /* Hover-lift + gradient border card */
+  .dw-card--lift{position:relative;background:var(--dw-surface);isolation:isolate}
+  .dw-card--lift::before{
+    content:"";position:absolute;inset:0;border-radius:16px;padding:1px;
+    background:linear-gradient(135deg,var(--dw-accent-soft),transparent 40%,transparent 60%,var(--dw-accent));
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    opacity:.5;transition:opacity .25s ease;z-index:-1;
+  }
+  .dw-card--lift:hover{
+    transform:translateY(-6px);
+    box-shadow:0 24px 48px -20px rgba(52,211,153,.35);
+  }
+  .dw-card--lift:hover::before{opacity:1}
+</style>
+</head>
+<body>
+<div class="dw-wrap">
+  <h1>Cards</h1>
+  <p class="dw-sub">Card básica, card con media (gradiente CSS) y card con hover-lift + borde gradiente.</p>
+
+  <div class="dw-grid">
+
+    <!-- Básica -->
+    <article class="dw-card" tabindex="0">
+      <span class="dw-card__tag">Básica</span>
+      <h2 class="dw-card__title">Melena de León</h2>
+      <p class="dw-card__text">Hongo funcional para enfoque y memoria. Cápsulas de 250mg, 120 unidades por frasco.</p>
+      <a class="dw-card__link" href="#">Ver producto →</a>
+    </article>
+
+    <!-- Con imagen (gradiente) -->
+    <article class="dw-card dw-card--media">
+      <div class="dw-card__media" role="img" aria-label="Imagen de producto Cordyceps"></div>
+      <div class="dw-card__body">
+        <span class="dw-card__tag">Con media</span>
+        <h2 class="dw-card__title">Cordyceps Militaris</h2>
+        <p class="dw-card__text">Energía y resistencia natural. Placeholder de imagen generado con gradientes CSS.</p>
+        <a class="dw-card__link" href="#">Explorar →</a>
+      </div>
+    </article>
+
+    <!-- Hover lift + borde gradiente -->
+    <article class="dw-card dw-card--lift" tabindex="0">
+      <span class="dw-card__tag">Hover-lift</span>
+      <h2 class="dw-card__title">Ganoderma (Reishi)</h2>
+      <p class="dw-card__text">Pasa el cursor: se eleva, proyecta sombra esmeralda y revela su borde gradiente.</p>
+      <a class="dw-card__link" href="#">Comprar →</a>
+    </article>
+
+  </div>
+</div>
+</body>
+</html>

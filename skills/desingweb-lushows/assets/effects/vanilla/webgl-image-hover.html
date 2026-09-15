@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Hover Distortion — Canvas 2D + CSS</title>
+<!--
+  ===================================================================
+  TÉCNICA USADA: Opción B (fallback robusto, CERO dependencias / CERO
+  errores de consola). Combina:
+    1) <canvas> 2D que dibuja la imagen con una ONDA de displacement
+       por columnas (sin( )) cuya amplitud sube/baja con lerp en hover.
+       Esto da un efecto líquido tipo shader, pero 100% Canvas 2D.
+    2) Capa CSS encima para RGB-split sutil + zoom (scale) en hover,
+       animando sólo transform/opacity.
+  Se eligió Canvas 2D sobre OGL/WebGL porque GARANTIZA funcionar sin
+  WebGL context loss ni 404 de CDN. Respeta prefers-reduced-motion
+  (sin onda; sólo un zoom CSS suave) y pointer:fine.
+  ===================================================================
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0a0a0c; --fg:#f4f4f6; --muted:#86868b; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:var(--bg); color:var(--fg); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; min-height:100vh; }
+  .wrap{ min-height:100vh; display:grid; place-items:center; padding:8vh 6vw; }
+  .head{ text-align:center; margin-bottom:5vh; }
+  .head h1{ font-size:clamp(2rem,6vw,4rem); font-weight:900; letter-spacing:-.04em; }
+  .head p{ color:var(--muted); margin-top:.8rem; letter-spacing:.18em; text-transform:uppercase; font-size:.78rem; }
+
+  .figure{ position:relative; width:min(640px,86vw); aspect-ratio:4/3; border-radius:20px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.5); }
+  .figure canvas{ display:block; width:100%; height:100%; }
+
+  /* Capa de RGB split + zoom, sólo transform/opacity */
+  .figure::before, .figure::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background-size:cover; background-position:center; mix-blend-mode:screen;
+    opacity:0; transition:opacity .5s ease, transform .6s cubic-bezier(.16,1,.3,1);
+    will-change:transform,opacity;
+  }
+  .figure.zoom canvas{ transition:transform .6s cubic-bezier(.16,1,.3,1); transform:scale(1.06); }
+  .figure .label{ position:absolute; left:0; right:0; bottom:0; padding:1.6rem 1.8rem; z-index:3;
+    background:linear-gradient(transparent,rgba(0,0,0,.65)); transform:translateY(8px); opacity:.85;
+    transition:transform .5s cubic-bezier(.16,1,.3,1), opacity .5s; }
+  .figure.zoom .label{ transform:translateY(0); opacity:1; }
+  .figure .label h2{ font-size:1.4rem; font-weight:800; letter-spacing:-.02em; }
+  .figure .label span{ color:var(--muted); font-size:.82rem; }
+
+  .note{ margin-top:4vh; color:var(--muted); font-size:.82rem; text-align:center; max-width:46ch; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div>
+      <div class="head">
+        <h1>Distorsión en hover</h1>
+        <p>pasa el ratón sobre la imagen</p>
+      </div>
+
+      <figure class="figure" id="fig">
+        <canvas id="cv"></canvas>
+        <div class="label"><h2>Liquid</h2><span>Canvas 2D · onda de displacement</span></div>
+      </figure>
+
+      <p class="note">Onda sinusoidal por columnas en Canvas 2D + RGB split y zoom en CSS. Sin WebGL, sin dependencias.</p>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const fig = document.getElementById('fig');
+  const cv  = document.getElementById('cv');
+  const ctx = cv.getContext('2d');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine   = window.matchMedia('(pointer:fine)').matches;
+
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.src = 'https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=1000&q=80&auto=format&fit=crop';
+
+  let W=0, H=0, dpr = Math.min(window.devicePixelRatio||1, 2);
+  let amp = 0, ampTarget = 0;   // amplitud de la onda (lerp en hover)
+  let t = 0;
+  let ready = false;
+
+  function resize(){
+    const r = fig.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  // dibuja la imagen "cover" con desplazamiento por columnas
+  function draw(){
+    if(!ready) return;
+    ctx.clearRect(0,0,W,H);
+    // cálculo cover
+    const ir = img.width/img.height, cr = W/H;
+    let dw, dh, dx, dy;
+    if(ir > cr){ dh = H; dw = H*ir; dx = (W-dw)/2; dy = 0; }
+    else { dw = W; dh = W/ir; dx = 0; dy = (H-dh)/2; }
+
+    const slices = 60;                 // columnas
+    const sliceW = dw/slices;
+    for(let i=0;i<slices;i++){
+      const phase = (i/slices)*Math.PI*4 + t;
+      const off = Math.sin(phase) * amp;      // desplazamiento vertical
+      const sx = (img.width/slices)*i;
+      ctx.drawImage(
+        img,
+        sx, 0, img.width/slices, img.height,           // origen
+        dx + i*sliceW, dy + off, sliceW+1, dh          // destino (con offset)
+      );
+    }
+  }
+
+  function loop(){
+    t += 0.04;
+    amp += (ampTarget - amp) * 0.08;     // lerp de amplitud
+    if(amp > 0.05 || ampTarget > 0) draw();
+    requestAnimationFrame(loop);
+  }
+
+  img.onload = ()=>{
+    ready = true;
+    resize();
+    draw();
+    if(!reduce && fine) loop();   // animación de onda sólo si procede
+  };
+
+  window.addEventListener('resize', ()=>{ resize(); draw(); });
+
+  // Hover: sube la amplitud + clase de zoom CSS
+  if(fine){
+    fig.addEventListener('mouseenter', ()=>{
+      fig.classList.add('zoom');
+      if(!reduce) ampTarget = 14;
+    });
+    fig.addEventListener('mouseleave', ()=>{
+      fig.classList.remove('zoom');
+      ampTarget = 0;
+    });
+  }
+})();
+</script>
+</body>
+</html>

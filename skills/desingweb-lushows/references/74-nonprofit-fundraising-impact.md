@@ -1,0 +1,42 @@
+# 74 — Nonprofit, fundraising & impacto social
+
+El único género donde **pides dinero sin nada tangible a cambio.** No vendes un producto: vendes *impacto, emoción y confianza*. El donante recibe la sensación de haber sido parte de un cambio (el "warm glow"). **Léelo para ONGs, fundaciones, causas, crowdfunding, donaciones.** Pareja de 21 (forms/donación), 31 (confianza), 17 (copy emocional), 32 (ética anti-dark-pattern). Regla de oro: **la emoción decide, la razón justifica — y una persona con nombre supera a "2 millones".**
+
+## 1. El género: la naturaleza emocional y de confianza
+
+**Tipos** (tono distinto): NGO/charity (UNICEF, charity:water — escala, impacto medible), advocacy/cause (vende una *visión del mundo*, más militante), crowdfunding (Vaki/GoFundMe — campaña puntual, urgencia), religiosa (comunidad+fe, dar recurrente), educación (alumni/becas), **grassroots local** (la fundación de barrio en Colombia — confianza por proximidad, no por marca).
+**Psicología del donante (las palancas):** **la emoción decide, la razón justifica** (las estadísticas no mueven; la emoción mueve y el dato tranquiliza) · **identifiable victim effect** (*un* rostro/nombre/historia supera a "2 millones" — el cerebro no siente millones, siente a María) · **warm glow** (la gente da para sentirse bien — hazla héroe, no culpable) · **la pregunta que mata la conversión:** *"¿a dónde va realmente mi dinero?"* (el miedo al fraude/desperdicio es la objeción #1).
+
+## 2. Storytelling & el caso emocional (el núcleo)
+
+**charity:water es el gold standard** y su lección es contraintuitiva: invirtió el viejo tropo "culpa y sufrimiento inspiran a dar" — se construye sobre *"the release"* (el alivio y la dignidad que trae el agua limpia), esperanza y dignidad sobre culpa.
+**Dirección de diseño:** **una persona, no una multitud** (hero con un rostro a cámara, nombre, historia de una frase) · **estructura piramidal** (páginas top ligeras y muy visuales, subpáginas densas para quien profundiza) · **video corto es expectativa, no bonus** (60s de un beneficiario a cámara convierte como ninguna foto) · **foto original, nunca stock** (el stock mata el engagement) · **el donante es el héroe** (el arco no es "ellos sufren → ten pena", es "aquí hay un problema → *tú* tienes el poder → este es el cambio que *tú* causas") · **"why now"/urgencia honesta**.
+**Ética de la representación (no negociable):** **evita el "poverty porn"** (imágenes que explotan la miseria — viola dignidad, retrata a las comunidades como indefensas, genera donaciones pero no activismo) · usa **asset framing** (muestra inteligencia/resiliencia/capacidad, no solo carencia) · es ético cuando **el beneficiario tiene voz y agencia** sobre su historia.
+
+## 3. El flujo de donación (el núcleo de conversión)
+
+**El botón Donar:** CTA #1, siempre visible. **Sticky donate button** que sigue al usuario (la gente dona *en el momento en que se siente inspirada*, no al terminar de leer). Contraste alto, una palabra, en header y repetido por sección.
+**El formulario (el asesino de fricción):** **corto** (si un primerizo no lo completa en **<2 min en móvil sin confusión**, está mal) · **donación como invitado** (sin cuenta) · **ask array / gift array** (3-5 montos sugeridos + campo libre; ancla la percepción y sube el ticket — los *smart ask amounts* por IA reportan +12% en monto) · **impact framing por monto** ("$50.000 = un mes de agua limpia para una familia") · **toggle One-Time/Monthly con tabs** (el formato tabbed sube donaciones ~15%; **el holy grail es mensual** — ponlo como default; truco de upgrade en el submit: ofrecer convertir a mensual a ~20% del monto, sube el gift anual de $100 a $240).
+**Pago (crítico en LatAm):** tarjetas + **digital wallets** (Apple/Google Pay reducen fricción móvil) + **PSE/Nequi/Daviplata** + opción de efectivo/transferencia (Vaki, Donorbox vía Stripe/PayPal).
+**El thank-you (el momento más desperdiciado):** no es el fin, es el inicio de la relación — confirmación **personal, no robótica**, lugar para mostrar impacto inmediato, invitar a mensual o compartir (charity:water cierra el loop con GPS y fotos del pozo). **Dato:** páginas de donación *branded* recaudan **7× más** que páginas genéricas — nunca mandes a un formulario de procesador desnudo.
+
+## 4. Confianza, transparencia & accountability
+
+La confianza es el cuello de botella; en 2026 los donantes **concentran su giving en pocas organizaciones que confían**. Señales a mostrar: **a dónde va el dinero** (% a programas vs overhead, visualizado — charity:water resolvió la desconfianza con "100% al terreno" + prueba GPS/foto) · **estatus legal/registro** (Colombia: NIT, personería jurídica/ESAL en footer) · **financials/reportes anuales** descargables · **impact reporting / el feedback loop** (el mensaje más poderoso: *"tu gift hizo X"* — cierra el círculo) · testimonios de beneficiarios *y* de donantes · **el mito del overhead** (sé honesto: operar cuesta dinero; el "0% gastos" genera desconfianza a largo plazo) · seguridad/legitimidad (SSL, sellos de pago, contacto real, dirección — parecer legítimo es supervivencia ante charities-estafa).
+
+## 5. Recurrencia, retención & el donor journey
+
+**El donante mensual (sustainer) es el santo grial:** retención **78-80%** vs **~32%** de one-time; lifetime promedio **7.77 años**. La base recurrente creció ~31% (2023-25). Ojo: **10% abandona en los primeros 2 meses** → los primeros 60 días son críticos para el onboarding.
+**La crisis de retención one-time** (~20-32% el primer año): el donante que da una vez y desaparece es la norma — la diferencia la hace la **cultivación**, no la captación.
+**El donor journey / stewardship (4 pasos):** (1) **welcome series** (thank-you personalizado en **<48h** + update "esto logró tu gift" a los 30 días), (2) stewardship continuo para recurrentes, (3) re-engagement para los que se enfriaron, (4) relación **no transacción** (el donante quiere pertenecer, no comprar).
+**Peer-to-peer / social fundraising:** convierte donantes en recaudadores (charity:water lo perfeccionó con campañas de cumpleaños "dona en vez de regalarme") — el donante trae su red a costo casi cero y con confianza pre-cargada.
+
+## 6. Campañas, móvil, LatAm & 2026
+
+**Páginas de campaña:** **goal thermometer / progress bar** (convierte la meta abstracta en algo tangible — campañas con indicador en tiempo real ven hasta +35% de participación; la gente da más cuando ve la campaña *cerca* de la meta) · **matching gifts** ("tu donación se duplica" — uno de los assets de mayor conversión, con deadline) · **Giving Tuesday / year-end** (picos del calendario, urgencia real).
+**Móvil (no opcional):** **+60% del tráfico nonprofit es móvil** → mobile-first obligatorio (formulario, ask array, wallets con el pulgar), carga en **1-3 segundos** o pierdes la donación.
+**Realidad LatAm/Colombia:** **WhatsApp es el canal de la causa** (difusión, recordatorios, agradecimiento, el link de donación viaja por WA no por email) · menor confianza en pago digital + cultura de **efectivo** → ofrece siempre alternativa (transferencia, Nequi) · **giving informal y diáspora** (colombianos en el exterior — habilita pago internacional vía Vaki/Donorbox) · la ONG local gana por proximidad y rostro conocido.
+**Tendencias 2026:** **AI personalization** (smart ask amounts, segmentación de stewardship — útil para *operar*, no para reemplazar la voz humana) · **crypto donations** (nicho menor — la mayoría de orgs no lo necesita aún) · **recurring-first** (el mensual como default) · **trust crisis** (la confianza se concentra; transparencia proactiva es el nuevo diferenciador).
+
+## Nonprofit anti-patterns — blacklist
+**formulario de donación largo** con cuenta obligatoria y 15 campos · **sin opción mensual** (o escondida — dejas el LTV sobre la mesa) · **sin impact framing** (montos desnudos sin "$X = Y") · **poverty porn** (explotar miseria/lástima, retratar sin dignidad ni agencia) · **sin transparencia** (a dónde va el dinero oculto o vago) · **sin thank-you** o uno robótico y frío · **botón Donar difícil de encontrar** o no sticky · **guilt-tripping / dark patterns** (culpar, casillas pre-marcadas, urgencia falsa) · **no mobile / carga lenta** (>3s) · **stock photos** en vez de fotografía real · **página de pago genérica** sin marca (pierdes 7×) · **estadísticas sin un rostro** · **captar sin cultivar** (ignorar el welcome series y la retención).

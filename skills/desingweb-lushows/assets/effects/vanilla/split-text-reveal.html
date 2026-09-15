@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split Text Reveal — Vanilla JS</title>
+<!--
+  SPLIT TEXT REVEAL — 100% vanilla, sin librerías.
+  Técnica: cada palabra se envuelve en una máscara (overflow:hidden)
+  y un <span> hijo que se anima de translateY(110%) → 0 con stagger.
+  Easing custom cubic-bezier. Respeta prefers-reduced-motion.
+  IntersectionObserver para disparar al entrar al viewport.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#08080a; --fg:#fafafa; --muted:#888; --ease:cubic-bezier(.16,1,.3,1); }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:var(--bg); color:var(--fg); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  body{ min-height:100vh; }
+
+  .stage{ min-height:100vh; display:grid; place-items:center; padding:0 6vw; }
+  .block{ max-width:1100px; }
+  .eyebrow{ color:var(--muted); letter-spacing:.3em; text-transform:uppercase; font-size:.8rem; margin-bottom:2rem; }
+  .title{ font-weight:900; font-size:clamp(2.4rem,9vw,7rem); line-height:1.02; letter-spacing:-.04em; }
+  .sub{ font-weight:300; font-size:clamp(1.1rem,2.4vw,1.6rem); color:var(--muted); margin-top:2rem; max-width:48ch; line-height:1.5; }
+
+  /* Mecánica del split */
+  .line-mask{ display:inline-block; overflow:hidden; vertical-align:top; padding-bottom:.08em; }
+  .word{ display:inline-block; transform:translateY(110%); will-change:transform; }
+  .reveal-on .word{ transition:transform .95s var(--ease); }
+  .is-in .word{ transform:translateY(0); }
+
+  /* Segundo bloque para mostrar reactivación por scroll */
+  .spacer{ height:60vh; }
+
+  /* reduce-motion: todo visible sin animación */
+  @media (prefers-reduced-motion: reduce){
+    .word{ transform:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+  <section class="stage">
+    <div class="block">
+      <div class="eyebrow" data-split>Estudio de diseño · 2026</div>
+      <h1 class="title" data-split>Diseñamos movimiento que se siente</h1>
+      <p class="sub" data-split>Cada palabra aparece desde su propia máscara con un retardo escalonado y un easing de salida largo.</p>
+    </div>
+  </section>
+
+  <div class="spacer"></div>
+
+  <section class="stage">
+    <div class="block">
+      <h1 class="title" data-split>Otra entrada al hacer scroll</h1>
+    </div>
+  </section>
+
+<script>
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 1) Partir cada elemento data-split en palabras enmascaradas.
+  document.querySelectorAll('[data-split]').forEach((el)=>{
+    const words = el.textContent.trim().split(/\s+/);
+    el.textContent = '';
+    el.classList.add('reveal-on');
+    words.forEach((w, i)=>{
+      const mask = document.createElement('span');
+      mask.className = 'line-mask';
+      const inner = document.createElement('span');
+      inner.className = 'word';
+      inner.textContent = w;
+      // stagger por palabra vía animation-delay (CSS transition-delay)
+      inner.style.transitionDelay = (i * 0.05) + 's';
+      mask.appendChild(inner);
+      el.appendChild(mask);
+      // espacio real entre palabras (fuera de la máscara)
+      el.appendChild(document.createTextNode(' '));
+    });
+  });
+
+  if (reduce){
+    document.querySelectorAll('[data-split]').forEach(el=>el.classList.add('is-in'));
+    return;
+  }
+
+  // 2) Disparar al entrar al viewport. requestAnimationFrame para forzar reflow limpio.
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e)=>{
+      if (e.isIntersecting){
+        requestAnimationFrame(()=> e.target.classList.add('is-in'));
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold:0.4 });
+
+  document.querySelectorAll('[data-split]').forEach(el=>io.observe(el));
+})();
+</script>
+</body>
+</html>

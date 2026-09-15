@@ -1,0 +1,74 @@
+<!-- SECCIÓN: Pricing (3 planes, uno resaltado). Copia el <section> + <style>. -->
+<section class="dw-price">
+  <header class="dw-price__head">
+    <span class="dw-price__eyebrow">Planes mensuales · cancela cuando quieras</span>
+    <h2 class="dw-price__title">Elige tu ritual. Nosotros nos encargamos del resto.</h2>
+  </header>
+  <div class="dw-price__grid">
+    <article class="dw-price__card">
+      <h3 class="dw-price__name">Enfoque</h3>
+      <p class="dw-price__for">Para empezar con un solo objetivo</p>
+      <div class="dw-price__amount"><span class="dw-price__cur">$</span>89.000<span class="dw-price__per">/mes</span></div>
+      <ul class="dw-price__list">
+        <li>1 extracto a elección (Melena, Cordyceps o Reishi)</li>
+        <li>120 cápsulas · dosis de 30 días</li>
+        <li>Guía de uso por WhatsApp con Addrian</li>
+        <li>Envío gratis a toda Colombia</li>
+      </ul>
+      <a class="dw-price__cta" href="#">Empezar</a>
+    </article>
+
+    <article class="dw-price__card dw-price__card--featured">
+      <span class="dw-price__badge">Más elegido</span>
+      <h3 class="dw-price__name">Equilibrio</h3>
+      <p class="dw-price__for">Mente, energía y descanso en un combo</p>
+      <div class="dw-price__amount"><span class="dw-price__cur">$</span>149.000<span class="dw-price__per">/mes</span></div>
+      <ul class="dw-price__list">
+        <li>Los 3 extractos en stack diario sinérgico</li>
+        <li>Protocolo personalizado según tu objetivo</li>
+        <li>Recordatorio de recompra automático</li>
+        <li>10% de descuento permanente por suscripción</li>
+        <li>Acceso prioritario a lotes nuevos</li>
+      </ul>
+      <a class="dw-price__cta dw-price__cta--solid" href="#">Quiero el combo</a>
+    </article>
+
+    <article class="dw-price__card">
+      <h3 class="dw-price__name">Laboratorio</h3>
+      <p class="dw-price__for">Para clínicas y revendedores</p>
+      <div class="dw-price__amount dw-price__amount--quote">A medida</div>
+      <ul class="dw-price__list">
+        <li>Compra por volumen con precio mayorista</li>
+        <li>Equipos de cultivo y kits de laboratorio</li>
+        <li>Certificados de análisis por lote</li>
+        <li>Asesor comercial dedicado</li>
+      </ul>
+      <a class="dw-price__cta" href="#">Hablar con ventas</a>
+    </article>
+  </div>
+</section>
+<style>
+  .dw-price{background:#07120E;color:#E8F5EE;padding:6rem 1.5rem;font-family:system-ui,sans-serif}
+  .dw-price__head{max-width:760px;margin:0 auto 3rem;text-align:center}
+  .dw-price__eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#5B7A6B}
+  .dw-price__title{margin:.7rem 0 0;font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.12;letter-spacing:-.02em;font-weight:700}
+  .dw-price__grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;align-items:start}
+  .dw-price__card{position:relative;background:#0F1F18;border:1px solid #1C3328;border-radius:22px;padding:2rem 1.7rem;display:flex;flex-direction:column}
+  .dw-price__card--featured{background:linear-gradient(165deg,#11281E 0%,#0F1F18 100%);border-color:#34D39955;box-shadow:0 20px 60px -20px #34D39940;transform:translateY(-12px)}
+  .dw-price__badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#34D399;color:#06231A;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .9rem;border-radius:999px}
+  .dw-price__name{margin:0;font-size:1.35rem;font-weight:680;letter-spacing:-.01em}
+  .dw-price__for{margin:.35rem 0 1.4rem;color:#A7C3B5;font-size:.92rem;min-height:2.6em}
+  .dw-price__amount{font-size:2.4rem;font-weight:720;letter-spacing:-.03em;line-height:1}
+  .dw-price__amount--quote{font-size:1.9rem;color:#34D399}
+  .dw-price__cur{font-size:1.2rem;vertical-align:.7em;margin-right:.1em;color:#A7C3B5}
+  .dw-price__per{font-size:.95rem;font-weight:500;color:#5B7A6B;margin-left:.2em}
+  .dw-price__list{list-style:none;margin:1.6rem 0;padding:1.6rem 0 0;border-top:1px solid #1C3328;display:grid;gap:.7rem;flex:1}
+  .dw-price__list li{position:relative;padding-left:1.7rem;font-size:.93rem;color:#CFE6DA;line-height:1.4}
+  .dw-price__list li::before{content:"";position:absolute;left:0;top:.1em;width:16px;height:16px;border-radius:50%;background:#34D39920;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2334D399' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}
+  .dw-price__cta{text-align:center;text-decoration:none;font-weight:650;padding:.85rem 1rem;border-radius:14px;border:1px solid #2D4A3C;color:#E8F5EE;transition:background-color .2s,transform .2s}
+  .dw-price__cta:hover{background:#15291F;transform:translateY(-2px)}
+  .dw-price__cta:focus-visible{outline:2px solid #34D399;outline-offset:3px}
+  .dw-price__cta--solid{background:#34D399;color:#06231A;border-color:#34D399}
+  .dw-price__cta--solid:hover{background:#46e3a9}
+  @media (max-width:860px){.dw-price__grid{grid-template-columns:1fr;max-width:440px}.dw-price__card--featured{transform:none}}
+</style>

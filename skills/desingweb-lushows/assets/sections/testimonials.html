@@ -1,0 +1,53 @@
+<!-- SECCIÓN: Testimonials (layout asimétrico offset). Copia el <section> + <style>. -->
+<section class="dw-tst">
+  <div class="dw-tst__head">
+    <span class="dw-tst__eyebrow">Lo que cuentan nuestros clientes</span>
+    <h2 class="dw-tst__title">Resultados que no caben en una etiqueta</h2>
+  </div>
+  <div class="dw-tst__grid">
+    <figure class="dw-tst__card dw-tst__card--a">
+      <blockquote class="dw-tst__quote">Llevo tres meses con Melena de León y por fin termino el día sin esa niebla mental de las 4 de la tarde. Lo noté en la segunda semana.</blockquote>
+      <figcaption class="dw-tst__by">
+        <span class="dw-tst__avatar" aria-hidden="true">MC</span>
+        <span class="dw-tst__meta"><strong>María Camila R.</strong><span>Diseñadora freelance · Medellín</span></span>
+      </figcaption>
+    </figure>
+
+    <figure class="dw-tst__card dw-tst__card--b">
+      <blockquote class="dw-tst__quote">El Cordyceps me cambió los entrenamientos. Misma rutina, menos fatiga. Y el envío llegó al día siguiente con el certificado del lote dentro.</blockquote>
+      <figcaption class="dw-tst__by">
+        <span class="dw-tst__avatar" aria-hidden="true">JD</span>
+        <span class="dw-tst__meta"><strong>Jhon Díaz</strong><span>Ciclista aficionado · Bogotá</span></span>
+      </figcaption>
+    </figure>
+
+    <figure class="dw-tst__card dw-tst__card--c">
+      <blockquote class="dw-tst__quote">Probé otras marcas que sabían a tierra y no hacían nada. Aquí el Reishi me ayuda a dormir de verdad. Addrian me armó el protocolo por WhatsApp.</blockquote>
+      <figcaption class="dw-tst__by">
+        <span class="dw-tst__avatar" aria-hidden="true">LF</span>
+        <span class="dw-tst__meta"><strong>Laura F.</strong><span>Enfermera por turnos · Cali</span></span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+<style>
+  .dw-tst{background:#07120E;color:#E8F5EE;padding:6rem 1.5rem;font-family:system-ui,sans-serif}
+  .dw-tst__head{max-width:1040px;margin:0 auto 3rem}
+  .dw-tst__eyebrow{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:#5B7A6B}
+  .dw-tst__title{margin:.6rem 0 0;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.1;letter-spacing:-.02em;font-weight:700;max-width:18ch}
+  .dw-tst__grid{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);gap:1.2rem}
+  .dw-tst__card{position:relative;background:#0F1F18;border:1px solid #1C3328;border-radius:20px;padding:2rem;transition:transform .25s ease,border-color .25s ease}
+  .dw-tst__card:hover{transform:translateY(-4px);border-color:#34D39955}
+  .dw-tst__card::before{content:"\201C";position:absolute;top:.4rem;right:1.2rem;font-size:4rem;line-height:1;color:#34D39922;font-family:Georgia,serif}
+  .dw-tst__card--a{grid-column:1/8}
+  .dw-tst__card--b{grid-column:8/13;margin-top:2.5rem;background:linear-gradient(160deg,#11281E,#0F1F18 70%)}
+  .dw-tst__card--c{grid-column:3/11;margin-top:-1rem}
+  .dw-tst__quote{margin:0;font-size:1.1rem;line-height:1.55;color:#E8F5EE;letter-spacing:-.01em}
+  .dw-tst__card--a .dw-tst__quote{font-size:1.25rem}
+  .dw-tst__by{display:flex;align-items:center;gap:.85rem;margin-top:1.6rem;padding-top:1.4rem;border-top:1px solid #1C3328}
+  .dw-tst__avatar{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#34D39918;color:#34D399;font-weight:700;font-size:.9rem;letter-spacing:.02em}
+  .dw-tst__meta{display:flex;flex-direction:column;line-height:1.3}
+  .dw-tst__meta strong{font-size:.98rem}
+  .dw-tst__meta span{color:#A7C3B5;font-size:.85rem}
+  @media (max-width:760px){.dw-tst__grid{display:grid;grid-template-columns:1fr}.dw-tst__card--a,.dw-tst__card--b,.dw-tst__card--c{grid-column:auto;margin-top:0}}
+</style>

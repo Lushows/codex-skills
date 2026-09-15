@@ -1,0 +1,80 @@
+<!-- SECCIÓN: Footer (columnas, logo, social, legal). Copia el <section> + <style>. -->
+<footer class="dw-foot">
+  <div class="dw-foot__top">
+    <div class="dw-foot__brand">
+      <a class="dw-foot__logo" href="#" aria-label="BIO-SETA inicio">
+        <span class="dw-foot__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a8 8 0 0 0-8 8c0 1.6.8 2.6 1 4h14c.2-1.4 1-2.4 1-4a8 8 0 0 0-8-8Z"/><path d="M10 22h4"/><path d="M9 19h6"/></svg>
+        </span>
+        BIO-SETA
+      </a>
+      <p class="dw-foot__tag">Hongos funcionales de laboratorio. Melena de León, Cordyceps y Reishi con doble extracción y análisis certificado.</p>
+      <div class="dw-foot__social" aria-label="Redes sociales">
+        <a class="dw-foot__icon" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="dw-foot__icon" href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-12.3 7.4L3 21l2.1-5.6A8.38 8.38 0 1 1 21 11.5Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg></a>
+        <a class="dw-foot__icon" href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4v8.5a4 4 0 1 1-4-4"/><path d="M15 7a5 5 0 0 0 4 2"/></svg></a>
+      </div>
+    </div>
+
+    <nav class="dw-foot__cols" aria-label="Pie de página">
+      <div class="dw-foot__col">
+        <h3 class="dw-foot__h">Productos</h3>
+        <a href="#">Melena de León</a>
+        <a href="#">Cordyceps Militaris</a>
+        <a href="#">Ganoderma / Reishi</a>
+        <a href="#">Combos y suscripción</a>
+        <a href="#">Equipos de laboratorio</a>
+      </div>
+      <div class="dw-foot__col">
+        <h3 class="dw-foot__h">Empresa</h3>
+        <a href="#">Nuestra ciencia</a>
+        <a href="#">Análisis de lotes</a>
+        <a href="#">Blog del micelio</a>
+        <a href="#">Mayoristas</a>
+      </div>
+      <div class="dw-foot__col">
+        <h3 class="dw-foot__h">Ayuda</h3>
+        <a href="#">Hablar con Addrian</a>
+        <a href="#">Envíos y devoluciones</a>
+        <a href="#">Preguntas frecuentes</a>
+        <a href="#">Garantía de 30 días</a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="dw-foot__bar">
+    <p class="dw-foot__legal">© 2026 BIO-SETA. Suplemento alimenticio, no sustituye una dieta equilibrada. Consulta a tu médico ante cualquier condición.</p>
+    <div class="dw-foot__legal-links">
+      <a href="#">Privacidad</a>
+      <a href="#">Términos</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+</footer>
+<style>
+  .dw-foot{background:#050D0A;color:#E8F5EE;padding:4.5rem 1.5rem 2rem;font-family:system-ui,sans-serif}
+  .dw-foot__top{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.3fr 2fr;gap:3rem}
+  .dw-foot__logo{display:inline-flex;align-items:center;gap:.55rem;font-size:1.25rem;font-weight:720;letter-spacing:-.01em;color:#E8F5EE;text-decoration:none}
+  .dw-foot__mark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:#34D39918;color:#34D399}
+  .dw-foot__mark svg{width:20px;height:20px}
+  .dw-foot__tag{margin:1.1rem 0 1.4rem;max-width:34ch;color:#A7C3B5;font-size:.95rem;line-height:1.55}
+  .dw-foot__social{display:flex;gap:.6rem}
+  .dw-foot__icon{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:#0F1F18;color:#A7C3B5;transition:color .2s,background-color .2s,transform .2s}
+  .dw-foot__icon svg{width:20px;height:20px}
+  .dw-foot__icon:hover{color:#34D399;background:#15291F;transform:translateY(-2px)}
+  .dw-foot__icon:focus-visible{outline:2px solid #34D399;outline-offset:2px}
+  .dw-foot__cols{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+  .dw-foot__col{display:flex;flex-direction:column;gap:.7rem}
+  .dw-foot__h{margin:0 0 .4rem;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#5B7A6B}
+  .dw-foot__col a{color:#CFE6DA;text-decoration:none;font-size:.93rem;transition:color .18s}
+  .dw-foot__col a:hover{color:#34D399}
+  .dw-foot__col a:focus-visible{outline:2px solid #34D399;outline-offset:2px;border-radius:3px}
+  .dw-foot__bar{max-width:1080px;margin:3rem auto 0;padding-top:1.6rem;border-top:1px solid #15291F;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
+  .dw-foot__legal{margin:0;color:#5B7A6B;font-size:.82rem;max-width:60ch;line-height:1.5}
+  .dw-foot__legal-links{display:flex;gap:1.4rem}
+  .dw-foot__legal-links a{color:#A7C3B5;text-decoration:none;font-size:.82rem;transition:color .18s}
+  .dw-foot__legal-links a:hover{color:#E8F5EE}
+  .dw-foot__legal-links a:focus-visible{outline:2px solid #34D399;outline-offset:2px;border-radius:3px}
+  @media (max-width:780px){.dw-foot__top{grid-template-columns:1fr;gap:2.4rem}.dw-foot__cols{grid-template-columns:repeat(2,1fr)}.dw-foot__bar{flex-direction:column;align-items:flex-start}}
+  @media (max-width:420px){.dw-foot__cols{grid-template-columns:1fr}}
+</style>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinematic Scroll — Motor cinemático (Lenis + GSAP)</title>
+<!--
+  MOTOR CINEMÁTICO — STARTER REUTILIZABLE
+  Stack: Lenis (smooth scroll) + GSAP + ScrollTrigger.
+  Técnicas: cámara push-in (scrub), reveals data-reveal, contador.
+  Solo anima transform/opacity. Respeta prefers-reduced-motion.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#07090c; --fg:#f3f5f7; --muted:#8a949e; --accent:#9bffce; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:var(--bg); color:var(--fg); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  body{ overflow-x:hidden; }
+  section{ position:relative; }
+
+  /* HERO con cámara push-in */
+  .hero{ height:100vh; display:grid; place-items:center; overflow:hidden; }
+  .hero__media{ position:absolute; inset:-8%; will-change:transform; }
+  .hero__media img{ width:100%; height:100%; object-fit:cover; display:block; filter:brightness(.55) saturate(1.1); }
+  .hero__inner{ position:relative; z-index:2; text-align:center; padding:0 6vw; }
+  .hero h1{ font-size:clamp(2.6rem,9vw,8rem); font-weight:800; line-height:.95; letter-spacing:-.04em; }
+  .hero p{ margin-top:1.2rem; color:var(--muted); font-size:clamp(1rem,2vw,1.3rem); }
+  .scroll-hint{ position:absolute; bottom:3vh; left:50%; transform:translateX(-50%); z-index:3; font-size:.75rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
+
+  /* Contenido */
+  .wrap{ max-width:1100px; margin:0 auto; padding:14vh 6vw; }
+  .lead{ font-size:clamp(1.8rem,5vw,4rem); font-weight:300; line-height:1.15; letter-spacing:-.02em; }
+  .lead b{ font-weight:800; color:var(--accent); }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5rem; margin-top:8vh; }
+  .card{ background:#0e1217; border:1px solid #1b2128; border-radius:18px; padding:2rem; will-change:transform,opacity; }
+  .card h3{ font-size:1.3rem; margin-bottom:.6rem; }
+  .card p{ color:var(--muted); font-size:.95rem; line-height:1.6; }
+
+  /* Contador */
+  .stats{ display:flex; flex-wrap:wrap; gap:4rem; justify-content:center; padding:18vh 6vw; }
+  .stat{ text-align:center; }
+  .stat .num{ font-size:clamp(3rem,9vw,7rem); font-weight:800; letter-spacing:-.04em; color:var(--accent); }
+  .stat .lbl{ color:var(--muted); letter-spacing:.18em; text-transform:uppercase; font-size:.78rem; margin-top:.4rem; }
+
+  [data-reveal]{ opacity:1; } /* fallback si JS no carga / reduce-motion */
+  .footer{ padding:10vh 6vw; text-align:center; color:var(--muted); font-size:.85rem; }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero__media" data-hero-img>
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&q=80&auto=format&fit=crop" alt="Arquitectura">
+    </div>
+    <div class="hero__inner">
+      <h1 data-hero-title>Cinemático</h1>
+      <p data-hero-sub>Scroll suave con Lenis · cámara push-in con GSAP ScrollTrigger</p>
+    </div>
+    <div class="scroll-hint">scroll ↓</div>
+  </section>
+
+  <section class="wrap">
+    <p class="lead" data-reveal>Un motor de scroll que se siente <b>físico</b>. Cada bloque entra con intención, no por inercia.</p>
+    <div class="grid">
+      <div class="card" data-reveal><h3>Lenis</h3><p>Smooth scrolling con RAF sincronizado al ticker de GSAP para cero desync.</p></div>
+      <div class="card" data-reveal><h3>ScrollTrigger</h3><p>Scrub real ligado a la barra de scroll. Push-in de cámara sobre la imagen.</p></div>
+      <div class="card" data-reveal><h3>Reveals</h3><p>Cualquier <code>[data-reveal]</code> se anima al entrar al viewport.</p></div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><div class="num" data-count="120">0</div><div class="lbl">Proyectos</div></div>
+    <div class="stat"><div class="num" data-count="98" data-suffix="%">0</div><div class="lbl">Satisfacción</div></div>
+    <div class="stat"><div class="num" data-count="14">0</div><div class="lbl">Premios</div></div>
+  </section>
+
+  <div class="footer">Starter reutilizable · edita variables CSS y los selectores data-*</div>
+
+<!-- LENIS -->
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<!-- GSAP + ScrollTrigger (cdnjs 3.12.5) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Si el usuario pide menos movimiento: no Lenis, no animaciones. Todo visible.
+  if (reduce || !window.gsap) {
+    document.querySelectorAll('[data-count]').forEach(el=>{
+      el.textContent = el.dataset.count + (el.dataset.suffix||'');
+    });
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---- 1) LENIS integrado con el ticker de GSAP ---- */
+  const lenis = new Lenis({ lerp:0.1, smoothWheel:true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time)=> lenis.raf(time * 1000)); // GSAP maneja el RAF
+  gsap.ticker.lagSmoothing(0);
+
+  /* ---- 2) HERO: cámara push-in (scrub) ---- */
+  gsap.timeline({
+    scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:true }
+  })
+  .to('[data-hero-img]', { scale:1.25, yPercent:12, ease:'none' }, 0)
+  .to('[data-hero-title]', { yPercent:-40, opacity:0.2, ease:'none' }, 0)
+  .to('[data-hero-sub]',   { yPercent:-80, opacity:0,   ease:'none' }, 0);
+
+  // entrada inicial del hero
+  gsap.from('[data-hero-title]', { yPercent:30, opacity:0, duration:1.1, ease:'power3.out' });
+
+  /* ---- 3) REVEALS genéricos data-reveal ---- */
+  gsap.utils.toArray('[data-reveal]').forEach((el)=>{
+    gsap.from(el, {
+      y:60, opacity:0, duration:1, ease:'power3.out',
+      scrollTrigger:{ trigger:el, start:'top 85%' }
+    });
+  });
+
+  /* ---- 4) CONTADOR animado al entrar ---- */
+  gsap.utils.toArray('[data-count]').forEach((el)=>{
+    const end = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const obj = { v:0 };
+    gsap.to(obj, {
+      v:end, duration:2, ease:'power2.out',
+      scrollTrigger:{ trigger:el, start:'top 90%' },
+      onUpdate:()=>{ el.textContent = Math.round(obj.v) + suffix; }
+    });
+  });
+})();
+</script>
+</body>
+</html>

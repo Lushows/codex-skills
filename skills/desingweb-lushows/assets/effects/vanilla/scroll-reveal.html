@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scroll reveal</title>
+<style>
+  :root{
+    --ease:cubic-bezier(.2,.8,.2,1);
+    --bg:#07120E; --surface:#0F1F18; --surface-2:#16291F; --border:#25382E;
+    --text:#E8F5EE; --muted:#A7BFB3; --accent:#34D399; --accent-2:#A7F3D0; --text-inv:#06231A;
+  }
+  *{margin:0;box-sizing:border-box}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:"Space Grotesk",system-ui,sans-serif;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 1.5rem}
+  .spacer{height:60vh;display:grid;place-items:center;text-align:center;color:var(--muted)}
+  .spacer span{font-size:.85rem;letter-spacing:.2em;text-transform:uppercase}
+  section{padding:14vh 0}
+  .eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-2);margin-bottom:.8rem}
+  h2{font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.03em;line-height:1.05;font-weight:600;margin-bottom:1rem}
+  p{color:var(--muted);font-size:1.08rem;max-width:54ch}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem}
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.5rem;
+  }
+  .card h3{font-size:1.15rem;margin-bottom:.5rem}
+  .card p{font-size:.95rem}
+  .dot{width:36px;height:36px;border-radius:10px;background:var(--surface-2);
+       display:grid;place-items:center;margin-bottom:1rem;color:var(--accent)}
+
+  /* Estado inicial: oculto y desplazado. La clase .in lo revela. */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  /* Stagger por delay de transición en hijos */
+  .stagger .reveal:nth-child(1){transition-delay:.0s}
+  .stagger .reveal:nth-child(2){transition-delay:.09s}
+  .stagger .reveal:nth-child(3){transition-delay:.18s}
+  .stagger .reveal:nth-child(4){transition-delay:.27s}
+
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+  }
+</style></head>
+<body>
+  <div class="spacer"><span>Scrollea hacia abajo ↓</span></div>
+
+  <div class="wrap">
+    <section>
+      <p class="eyebrow reveal">Capítulo 01</p>
+      <h2 class="reveal">El contenido aparece al entrar en cuadro</h2>
+      <p class="reveal">Un IntersectionObserver añade la clase <code>.in</code> cuando el elemento cruza el umbral del viewport. Nada se anima fuera de pantalla: cero coste hasta que importa.</p>
+    </section>
+
+    <section class="stagger">
+      <p class="eyebrow reveal">Capítulo 02</p>
+      <h2 class="reveal">Entrada escalonada</h2>
+      <div class="grid">
+        <div class="card reveal">
+          <div class="dot"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/></svg></div>
+          <h3>Composición</h3><p>Solo transform y opacity: compositable en GPU, sin reflow.</p>
+        </div>
+        <div class="card reveal">
+          <div class="dot"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0M12 7v5l3 2"/></svg></div>
+          <h3>Una vez</h3><p>Tras revelarse deja de observarse; no parpadea al volver.</p>
+        </div>
+        <div class="card reveal">
+          <div class="dot"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <h3>Accesible</h3><p>Respeta prefers-reduced-motion mostrando todo de inmediato.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow reveal">Capítulo 03</p>
+      <h2 class="reveal">Ritmo, no espectáculo</h2>
+      <p class="reveal">Reserva el motion para 1-2 momentos. Si todo se mueve igual, nada destaca: el scroll-reveal funciona porque guía la lectura, no porque adorne.</p>
+    </section>
+  </div>
+
+  <div class="spacer"><span>Fin</span></div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var targets = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)){
+    targets.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target); // revelar una sola vez
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+  targets.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body></html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Magnetic button</title>
+<style>
+  :root{
+    --ease:cubic-bezier(.2,.8,.2,1);
+    --bg:#07120E; --text:#E8F5EE; --muted:#A7BFB3;
+    --accent:#34D399; --accent-2:#A7F3D0; --text-inv:#06231A;
+  }
+  *{margin:0;box-sizing:border-box}
+  body{
+    min-height:100vh;display:grid;place-items:center;
+    background:
+      radial-gradient(55% 55% at 50% 40%, rgba(52,211,153,.12) 0%, transparent 65%),
+      var(--bg);
+    color:var(--text);font-family:"Space Grotesk",system-ui,sans-serif;
+  }
+  .stage{display:grid;place-items:center;gap:1.4rem;text-align:center;padding:2rem}
+  .hint{color:var(--muted);font-size:.9rem;letter-spacing:.04em}
+  /* La zona magnética es mayor que el botón: el cursor "atrae" desde lejos */
+  .magnet{
+    display:inline-grid;place-items:center;
+    padding:48px;border-radius:28px;
+  }
+  .btn{
+    position:relative;display:inline-flex;align-items:center;gap:.6rem;
+    padding:1rem 2rem;border:none;border-radius:14px;cursor:pointer;
+    background:var(--accent);color:var(--text-inv);
+    font-family:inherit;font-weight:600;font-size:1.05rem;
+    transform:translate3d(0,0,0);
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+    box-shadow:0 8px 30px -8px rgba(52,211,153,.5);
+    will-change:transform;
+  }
+  .btn:hover{box-shadow:0 16px 44px -10px rgba(52,211,153,.65)}
+  .btn:focus-visible{outline:2px solid var(--accent-2);outline-offset:4px}
+  .btn .label{display:inline-block;transition:transform .35s var(--ease);will-change:transform}
+  .btn svg{transition:transform .2s var(--ease)}
+  .btn:hover svg{transform:translateX(3px)}
+  @media (prefers-reduced-motion:reduce){
+    .btn,.btn .label{transition:none !important;transform:none !important}
+  }
+</style></head>
+<body>
+  <div class="stage">
+    <p class="hint">Acerca el cursor — el botón te sigue</p>
+    <div class="magnet" id="magnet">
+      <button class="btn" id="btn" type="button">
+        <span class="label">Atráeme
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+<script>
+(function(){
+  var magnet = document.getElementById('magnet');
+  var btn = document.getElementById('btn');
+  var label = btn.querySelector('.label');
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (reduce) return;
+
+  var STRENGTH = 0.4;   // cuánto se desplaza el botón respecto al cursor
+  var LABEL_LAG = 0.18; // el texto se mueve un poco más para dar profundidad
+
+  magnet.addEventListener('mousemove', function(e){
+    var r = btn.getBoundingClientRect();
+    var cx = r.left + r.width / 2;
+    var cy = r.top + r.height / 2;
+    var dx = (e.clientX - cx) * STRENGTH;
+    var dy = (e.clientY - cy) * STRENGTH;
+    btn.style.transform = 'translate3d(' + dx + 'px,' + dy + 'px,0)';
+    label.style.transform = 'translate3d(' + (dx * LABEL_LAG) + 'px,' + (dy * LABEL_LAG) + 'px,0)';
+  });
+
+  magnet.addEventListener('mouseleave', function(){
+    // reset suave: la transición CSS hace el muelle de regreso
+    btn.style.transform = 'translate3d(0,0,0)';
+    label.style.transform = 'translate3d(0,0,0)';
+  });
+})();
+</script>
+</body></html>

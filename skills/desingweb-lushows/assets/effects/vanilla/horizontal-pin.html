@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizontal Pin Gallery — GSAP ScrollTrigger</title>
+<!--
+  GALERÍA HORIZONTAL CON PIN
+  El contenedor se fija (pin) y los paneles se desplazan en X
+  conforme avanza el scroll vertical. Distancia recalculada con
+  invalidateOnRefresh para resize. Solo anima transform.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0a0a0c; --fg:#f4f4f6; --muted:#8c8c96; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:var(--bg); color:var(--fg); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  body{ overflow-x:hidden; }
+
+  .intro{ height:80vh; display:grid; place-items:center; text-align:center; padding:0 6vw; }
+  .intro h1{ font-size:clamp(2.4rem,8vw,6rem); font-weight:800; letter-spacing:-.04em; line-height:.95; }
+  .intro p{ margin-top:1rem; color:var(--muted); letter-spacing:.2em; text-transform:uppercase; font-size:.8rem; }
+
+  /* Track horizontal */
+  .gallery{ overflow:hidden; }
+  .track{ display:flex; width:max-content; will-change:transform; }
+  .panel{ position:relative; width:70vw; height:100vh; flex:0 0 auto; margin-right:4vw; border-radius:24px; overflow:hidden; }
+  .panel:first-child{ margin-left:4vw; }
+  .panel img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; filter:brightness(.7); }
+  .panel__cap{ position:absolute; left:0; bottom:0; right:0; padding:2.4rem; background:linear-gradient(transparent,rgba(0,0,0,.7)); }
+  .panel__cap .idx{ font-size:.8rem; letter-spacing:.25em; color:var(--muted); }
+  .panel__cap h2{ font-size:clamp(1.6rem,3.5vw,3rem); font-weight:800; letter-spacing:-.03em; }
+  .grad{ background:linear-gradient(135deg,#1d2671,#c33764); }
+
+  .outro{ height:60vh; display:grid; place-items:center; color:var(--muted); }
+</style>
+</head>
+<body>
+
+  <section class="intro">
+    <div>
+      <h1>Galería Horizontal</h1>
+      <p>scroll para avanzar →</p>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <div class="track" data-track>
+      <article class="panel">
+        <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1000&q=80&auto=format&fit=crop" alt="">
+        <div class="panel__cap"><div class="idx">01 / 05</div><h2>Forma</h2></div>
+      </article>
+      <article class="panel">
+        <img src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=1000&q=80&auto=format&fit=crop" alt="">
+        <div class="panel__cap"><div class="idx">02 / 05</div><h2>Textura</h2></div>
+      </article>
+      <article class="panel">
+        <img src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=1000&q=80&auto=format&fit=crop" alt="">
+        <div class="panel__cap"><div class="idx">03 / 05</div><h2>Color</h2></div>
+      </article>
+      <article class="panel">
+        <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1000&q=80&auto=format&fit=crop" alt="">
+        <div class="panel__cap"><div class="idx">04 / 05</div><h2>Luz</h2></div>
+      </article>
+      <article class="panel grad">
+        <div class="panel__cap"><div class="idx">05 / 05</div><h2>Espacio</h2></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="outro">Fin del recorrido — sigue haciendo scroll</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const track = document.querySelector('[data-track]');
+  const gallery = document.querySelector('.gallery');
+
+  // Sin movimiento: dejamos la galería como scroll horizontal nativo accesible.
+  if (reduce || !window.gsap){
+    gallery.style.overflowX = 'auto';
+    track.style.willChange = 'auto';
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Distancia = cuánto sobresale el track del viewport.
+  const getScrollAmount = () => track.scrollWidth - window.innerWidth;
+
+  gsap.to(track, {
+    x: () => -getScrollAmount(),          // función => se reevalúa en refresh
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.gallery',
+      start: 'top top',
+      pin: true,
+      scrub: 1,
+      // distancia de scroll vertical = ancho horizontal a recorrer
+      end: () => '+=' + getScrollAmount(),
+      invalidateOnRefresh: true           // recalcula en resize / carga de imgs
+    }
+  });
+
+  // Re-refresh cuando las imágenes terminan de cargar (cambian scrollWidth)
+  window.addEventListener('load', () => ScrollTrigger.refresh());
+})();
+</script>
+</body>
+</html>

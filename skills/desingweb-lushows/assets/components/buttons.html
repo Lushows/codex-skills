@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buttons — DW Components</title>
+<style>
+  :root{
+    --dw-bg:#0A0A0F;
+    --dw-surface:#14141C;
+    --dw-surface-2:#1C1C28;
+    --dw-text:#E8E8F0;
+    --dw-text-dim:#9A9AB0;
+    --dw-accent:#34D399;
+    --dw-accent-soft:#6EE7B7;
+    --dw-ring:#6EE7B7;
+    --dw-border:rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--dw-bg);color:var(--dw-text);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:48px 24px;
+  }
+  .dw-wrap{max-width:880px;margin:0 auto}
+  h1{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px}
+  .dw-sub{color:var(--dw-text-dim);font-size:14px;margin-bottom:40px}
+  .dw-section{margin-bottom:44px}
+  .dw-label{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--dw-text-dim);margin-bottom:16px}
+  .dw-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+
+  /* Base button */
+  .dw-btn{
+    --_pad-y:11px;--_pad-x:20px;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font:inherit;font-size:14px;font-weight:600;line-height:1;
+    padding:var(--_pad-y) var(--_pad-x);
+    border-radius:10px;border:1px solid transparent;
+    cursor:pointer;user-select:none;text-decoration:none;
+    transition:background .18s ease,border-color .18s ease,transform .12s ease,box-shadow .18s ease,color .18s ease;
+  }
+  .dw-btn:focus-visible{
+    outline:none;
+    box-shadow:0 0 0 2px var(--dw-bg),0 0 0 4px var(--dw-ring);
+  }
+  .dw-btn:active{transform:translateY(1px) scale(.99)}
+  .dw-btn:disabled{cursor:not-allowed;opacity:.45;transform:none;box-shadow:none}
+
+  /* Primary */
+  .dw-btn--primary{
+    background:linear-gradient(180deg,var(--dw-accent-soft),var(--dw-accent));
+    color:#04130C;box-shadow:0 6px 20px -8px rgba(52,211,153,.6);
+  }
+  .dw-btn--primary:hover:not(:disabled){
+    background:linear-gradient(180deg,#8af0c5,#46dca6);
+    box-shadow:0 10px 26px -8px rgba(52,211,153,.7);
+  }
+  .dw-btn--primary:active:not(:disabled){box-shadow:0 4px 12px -6px rgba(52,211,153,.6)}
+
+  /* Ghost */
+  .dw-btn--ghost{
+    background:var(--dw-surface);color:var(--dw-text);border-color:var(--dw-border);
+  }
+  .dw-btn--ghost:hover:not(:disabled){
+    background:var(--dw-surface-2);border-color:rgba(110,231,183,.4);color:var(--dw-accent-soft);
+  }
+  .dw-btn--ghost:active:not(:disabled){background:#101018}
+
+  /* Icon button */
+  .dw-btn--icon{
+    padding:0;width:42px;height:42px;border-radius:11px;
+    background:var(--dw-surface);color:var(--dw-text-dim);border-color:var(--dw-border);
+  }
+  .dw-btn--icon:hover:not(:disabled){color:var(--dw-accent-soft);border-color:rgba(110,231,183,.4);background:var(--dw-surface-2)}
+  .dw-btn--icon svg{width:18px;height:18px;display:block}
+
+  .dw-hint{font-size:12px;color:var(--dw-text-dim);margin-top:12px}
+</style>
+</head>
+<body>
+<div class="dw-wrap">
+  <h1>Buttons</h1>
+  <p class="dw-sub">Variantes primary / ghost / icon — con hover, active, disabled y :focus-visible anillado.</p>
+
+  <div class="dw-section">
+    <div class="dw-label">Primary</div>
+    <div class="dw-row">
+      <button class="dw-btn dw-btn--primary">Comprar ahora</button>
+      <button class="dw-btn dw-btn--primary">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Continuar
+      </button>
+      <button class="dw-btn dw-btn--primary" disabled>Procesando…</button>
+    </div>
+    <p class="dw-hint">Tab hasta el botón para ver el anillo de foco.</p>
+  </div>
+
+  <div class="dw-section">
+    <div class="dw-label">Ghost</div>
+    <div class="dw-row">
+      <button class="dw-btn dw-btn--ghost">Cancelar</button>
+      <button class="dw-btn dw-btn--ghost">Ver detalles</button>
+      <button class="dw-btn dw-btn--ghost" disabled>No disponible</button>
+    </div>
+  </div>
+
+  <div class="dw-section">
+    <div class="dw-label">Icon</div>
+    <div class="dw-row">
+      <button class="dw-btn dw-btn--icon" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <button class="dw-btn dw-btn--icon" aria-label="Favorito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9Z"/></svg>
+      </button>
+      <button class="dw-btn dw-btn--icon" aria-label="Más opciones" disabled>
+        <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

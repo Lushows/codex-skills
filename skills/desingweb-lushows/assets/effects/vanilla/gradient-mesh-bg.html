@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gradient mesh background</title>
+<style>
+  :root{
+    --bg:#07120E; --text:#E8F5EE; --muted:#A7BFB3;
+    --accent:#34D399; --accent-2:#A7F3D0; --text-inv:#06231A;
+  }
+  *{margin:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:"Space Grotesk",system-ui,sans-serif;
+    overflow:hidden;display:grid;place-items:center;
+  }
+  .mesh{position:fixed;inset:0;overflow:hidden;z-index:0}
+  /* Cuatro manchas radiales en una capa difuminada. Solo se anima transform. */
+  .mesh::before,.mesh::after{
+    content:"";position:absolute;inset:-25%;
+    filter:blur(90px);will-change:transform;
+  }
+  .mesh::before{
+    background:
+      radial-gradient(34% 34% at 20% 28%, rgba(52,211,153,.85) 0%, transparent 70%),
+      radial-gradient(30% 30% at 78% 22%, rgba(167,243,208,.55) 0%, transparent 70%);
+    opacity:.55;
+    animation:driftA 19s ease-in-out infinite;
+  }
+  .mesh::after{
+    background:
+      radial-gradient(40% 40% at 62% 80%, rgba(16,124,102,.85) 0%, transparent 72%),
+      radial-gradient(28% 28% at 30% 82%, rgba(52,211,153,.45) 0%, transparent 70%);
+    opacity:.5;
+    animation:driftB 24s ease-in-out infinite;
+  }
+  /* Grano sutil para evitar banding del degradado */
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .content{position:relative;z-index:2;text-align:center;padding:2rem;max-width:620px}
+  .eyebrow{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-2);margin-bottom:1rem}
+  h1{font-size:clamp(2.2rem,7vw,4rem);letter-spacing:-.035em;line-height:1.02;font-weight:600}
+  p{margin-top:1rem;color:var(--muted);font-size:1.1rem;line-height:1.6}
+  @keyframes driftA{
+    0%,100%{transform:translate3d(0,0,0) scale(1)}
+    50%{transform:translate3d(5%,-4%,0) scale(1.12)}
+  }
+  @keyframes driftB{
+    0%,100%{transform:translate3d(0,0,0) scale(1.05)}
+    50%{transform:translate3d(-4%,3%,0) scale(.95)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .mesh::before,.mesh::after{animation:none}
+  }
+</style></head>
+<body>
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="content">
+    <p class="eyebrow">Aurora viva</p>
+    <h1>Fondo mesh animado</h1>
+    <p>Cuatro radial-gradient superpuestos, difuminados en una sola capa y a la deriva en bucle lento. Solo se anima transform — compositable en GPU, sin repaint.</p>
+  </div>
+</body></html>

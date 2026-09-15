@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navbar — DW Components</title>
+<style>
+  :root{
+    --dw-bg:#0A0A0F;
+    --dw-surface:#14141C;
+    --dw-text:#E8E8F0;
+    --dw-text-dim:#9A9AB0;
+    --dw-accent:#34D399;
+    --dw-accent-soft:#6EE7B7;
+    --dw-ring:#6EE7B7;
+    --dw-border:rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--dw-bg);color:var(--dw-text);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;min-height:200vh;
+  }
+
+  /* Sticky nav with backdrop blur */
+  .dw-nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,10,15,.6);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--dw-border);
+  }
+  .dw-nav__inner{
+    max-width:1100px;margin:0 auto;padding:0 24px;
+    height:64px;display:flex;align-items:center;gap:24px;
+  }
+  .dw-nav__logo{
+    display:inline-flex;align-items:center;gap:9px;
+    font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--dw-text);text-decoration:none;
+    border-radius:8px;
+  }
+  .dw-nav__logo:focus-visible{outline:none;box-shadow:0 0 0 2px var(--dw-bg),0 0 0 4px var(--dw-ring)}
+  .dw-nav__dot{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,var(--dw-accent-soft),var(--dw-accent));box-shadow:0 0 16px -2px rgba(52,211,153,.7)}
+
+  .dw-nav__links{display:flex;align-items:center;gap:6px;margin-left:auto}
+  .dw-nav__link{
+    color:var(--dw-text-dim);font-size:14px;font-weight:500;text-decoration:none;
+    padding:8px 12px;border-radius:8px;transition:color .15s ease,background .15s ease;
+  }
+  .dw-nav__link:hover{color:var(--dw-text);background:rgba(255,255,255,.05)}
+  .dw-nav__link:focus-visible{outline:none;color:var(--dw-accent-soft);box-shadow:0 0 0 2px var(--dw-bg),0 0 0 4px var(--dw-ring)}
+
+  .dw-nav__cta{
+    margin-left:8px;font-size:14px;font-weight:600;text-decoration:none;
+    color:#04130C;padding:9px 16px;border-radius:10px;
+    background:linear-gradient(180deg,var(--dw-accent-soft),var(--dw-accent));
+    box-shadow:0 6px 18px -8px rgba(52,211,153,.6);
+    transition:transform .12s ease,box-shadow .18s ease;
+  }
+  .dw-nav__cta:hover{box-shadow:0 10px 24px -8px rgba(52,211,153,.75)}
+  .dw-nav__cta:active{transform:translateY(1px)}
+  .dw-nav__cta:focus-visible{outline:none;box-shadow:0 0 0 2px var(--dw-bg),0 0 0 4px var(--dw-ring)}
+
+  /* Mobile toggle via checkbox hack */
+  .dw-nav__toggle{display:none}
+  .dw-nav__burger{
+    display:none;margin-left:auto;width:42px;height:42px;border-radius:10px;
+    border:1px solid var(--dw-border);background:var(--dw-surface);color:var(--dw-text);
+    cursor:pointer;align-items:center;justify-content:center;
+  }
+  .dw-nav__burger:focus-visible{outline:none;box-shadow:0 0 0 2px var(--dw-bg),0 0 0 4px var(--dw-ring)}
+  .dw-nav__burger svg{width:20px;height:20px}
+  .dw-nav__burger .ico-close{display:none}
+
+  .dw-demo{max-width:1100px;margin:48px auto;padding:0 24px}
+  .dw-demo h1{font-size:24px;font-weight:700;letter-spacing:-.02em}
+  .dw-demo p{color:var(--dw-text-dim);font-size:14px;line-height:1.6}
+
+  @media (max-width:760px){
+    .dw-nav__burger{display:inline-flex}
+    .dw-nav__links{
+      position:absolute;top:64px;left:0;right:0;
+      flex-direction:column;align-items:stretch;gap:4px;
+      background:rgba(10,10,15,.92);
+      backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--dw-border);
+      padding:12px 16px 18px;margin:0;
+      max-height:0;overflow:hidden;opacity:0;pointer-events:none;
+      transition:max-height .3s ease,opacity .25s ease,padding .3s ease;
+    }
+    .dw-nav__link{padding:12px}
+    .dw-nav__cta{margin:8px 0 0;text-align:center}
+    .dw-nav__toggle:checked ~ .dw-nav__links{
+      max-height:380px;opacity:1;pointer-events:auto;
+    }
+    .dw-nav__toggle:checked ~ .dw-nav__burger .ico-open{display:none}
+    .dw-nav__toggle:checked ~ .dw-nav__burger .ico-close{display:block}
+  }
+</style>
+</head>
+<body>
+<header class="dw-nav">
+  <div class="dw-nav__inner">
+    <a class="dw-nav__logo" href="#"><span class="dw-nav__dot" aria-hidden="true"></span> BIO-SETA</a>
+
+    <input type="checkbox" id="dw-nav-toggle" class="dw-nav__toggle" hidden>
+
+    <nav class="dw-nav__links" aria-label="Principal">
+      <a class="dw-nav__link" href="#">Productos</a>
+      <a class="dw-nav__link" href="#">Ciencia</a>
+      <a class="dw-nav__link" href="#">Testimonios</a>
+      <a class="dw-nav__link" href="#">Contacto</a>
+      <a class="dw-nav__cta" href="#">Comprar</a>
+    </nav>
+
+    <label class="dw-nav__burger" for="dw-nav-toggle" aria-label="Abrir menú" role="button" tabindex="0">
+      <svg class="ico-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="ico-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </label>
+  </div>
+</header>
+
+<main class="dw-demo">
+  <h1>Nav sticky con blur</h1>
+  <p>Desplázate: la barra permanece fija con fondo translúcido (backdrop-filter). Reduce la ventana a menos de 760px para ver el menú móvil (checkbox hack, sin JS de framework).</p>
+</main>
+
+<script>
+  // Permite alternar el menú con Enter/Espacio sobre el label (a11y teclado)
+  document.querySelector('.dw-nav__burger').addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){
+      e.preventDefault();
+      var cb=document.getElementById('dw-nav-toggle');
+      cb.checked=!cb.checked;
+    }
+  });
+</script>
+</body>
+</html>

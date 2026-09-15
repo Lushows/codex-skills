@@ -1,0 +1,31 @@
+<!-- SECCIÓN: CTA final (un solo foco, glow). Copia el <section> + <style>. -->
+<section class="dw-cta">
+  <div class="dw-cta__panel">
+    <div class="dw-cta__glow" aria-hidden="true"></div>
+    <div class="dw-cta__inner">
+      <span class="dw-cta__eyebrow">Tu primer lote te espera</span>
+      <h2 class="dw-cta__title">Empieza hoy. Siente la diferencia en 30 días.</h2>
+      <p class="dw-cta__sub">Escríbele a Addrian por WhatsApp y arma tu protocolo en dos minutos. Sin compromiso, con garantía de devolución.</p>
+      <div class="dw-cta__actions">
+        <a class="dw-cta__btn" href="#">Hablar con Addrian</a>
+        <span class="dw-cta__note">Respuesta en minutos · Envío gratis</span>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .dw-cta{background:#07120E;padding:5rem 1.5rem;font-family:system-ui,sans-serif}
+  .dw-cta__panel{position:relative;overflow:hidden;max-width:980px;margin:0 auto;border-radius:28px;background:linear-gradient(160deg,#0F1F18,#0A1812);border:1px solid #1C3328;padding:4.5rem 2rem;text-align:center}
+  .dw-cta__glow{position:absolute;inset:auto -10% -60% -10%;height:120%;background:radial-gradient(50% 60% at 50% 100%,#34D39944,transparent 70%);filter:blur(50px);animation:dw-cta-pulse 8s ease-in-out infinite}
+  .dw-cta__inner{position:relative;max-width:620px;margin:0 auto;color:#E8F5EE}
+  .dw-cta__eyebrow{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:#34D399}
+  .dw-cta__title{margin:1rem 0 .8rem;font-size:clamp(1.9rem,5vw,3rem);line-height:1.08;letter-spacing:-.025em;font-weight:720}
+  .dw-cta__sub{margin:0 auto;max-width:46ch;color:#A7C3B5;font-size:1.05rem;line-height:1.55}
+  .dw-cta__actions{margin-top:2.2rem;display:flex;flex-direction:column;align-items:center;gap:.8rem}
+  .dw-cta__btn{display:inline-block;background:#34D399;color:#06231A;font-weight:700;text-decoration:none;padding:1rem 2.4rem;border-radius:999px;box-shadow:0 10px 40px #34D39940;transition:transform .2s,box-shadow .2s}
+  .dw-cta__btn:hover{transform:translateY(-3px);box-shadow:0 16px 50px #34D39966}
+  .dw-cta__btn:focus-visible{outline:2px solid #E8F5EE;outline-offset:3px}
+  .dw-cta__note{font-size:.85rem;color:#5B7A6B;letter-spacing:.02em}
+  @keyframes dw-cta-pulse{0%,100%{opacity:.7}50%{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.dw-cta__glow{animation:none}}
+</style>

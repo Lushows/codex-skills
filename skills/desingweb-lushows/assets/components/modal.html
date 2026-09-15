@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modal — DW Components</title>
+<style>
+  :root{
+    --dw-bg:#0A0A0F;
+    --dw-surface:#14141C;
+    --dw-surface-2:#1C1C28;
+    --dw-text:#E8E8F0;
+    --dw-text-dim:#9A9AB0;
+    --dw-accent:#34D399;
+    --dw-accent-soft:#6EE7B7;
+    --dw-ring:#6EE7B7;
+    --dw-border:rgba(255,255,255,.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--dw-bg);color:var(--dw-text);
+    font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;padding:48px 24px;min-height:100vh;
+  }
+  .dw-wrap{max-width:720px;margin:0 auto}
+  h1{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:0 0 4px}
+  .dw-sub{color:var(--dw-text-dim);font-size:14px;margin-bottom:32px}
+
+  .dw-btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font:inherit;font-size:14px;font-weight:600;line-height:1;
+    padding:11px 20px;border-radius:10px;border:1px solid transparent;cursor:pointer;
+    transition:background .18s,border-color .18s,transform .12s,box-shadow .18s,color .18s;
+  }
+  .dw-btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--dw-bg),0 0 0 4px var(--dw-ring)}
+  .dw-btn:active{transform:translateY(1px) scale(.99)}
+  .dw-btn--primary{background:linear-gradient(180deg,var(--dw-accent-soft),var(--dw-accent));color:#04130C;box-shadow:0 6px 20px -8px rgba(52,211,153,.6)}
+  .dw-btn--primary:hover{box-shadow:0 10px 26px -8px rgba(52,211,153,.75)}
+  .dw-btn--ghost{background:var(--dw-surface);color:var(--dw-text);border-color:var(--dw-border)}
+  .dw-btn--ghost:hover{background:var(--dw-surface-2);color:var(--dw-accent-soft);border-color:rgba(110,231,183,.4)}
+
+  /* Overlay + dialog */
+  .dw-modal{
+    position:fixed;inset:0;z-index:100;
+    display:none;align-items:center;justify-content:center;padding:24px;
+    background:rgba(4,6,10,.66);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  }
+  .dw-modal.is-open{display:flex;animation:dw-fade .22s ease}
+  @keyframes dw-fade{from{opacity:0}to{opacity:1}}
+
+  .dw-dialog{
+    width:100%;max-width:440px;
+    background:linear-gradient(180deg,var(--dw-surface-2),var(--dw-surface));
+    border:1px solid var(--dw-border);border-radius:18px;
+    padding:28px;box-shadow:0 40px 80px -30px rgba(0,0,0,.8);
+    transform:translateY(14px) scale(.97);opacity:0;
+    animation:dw-pop .26s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes dw-pop{to{transform:translateY(0) scale(1);opacity:1}}
+
+  .dw-dialog__head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px}
+  .dw-dialog__title{font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
+  .dw-dialog__close{
+    flex:none;width:34px;height:34px;border-radius:9px;cursor:pointer;
+    background:transparent;border:1px solid var(--dw-border);color:var(--dw-text-dim);
+    display:inline-flex;align-items:center;justify-content:center;
+    transition:color .15s,border-color .15s,background .15s;
+  }
+  .dw-dialog__close:hover{color:var(--dw-text);background:rgba(255,255,255,.05)}
+  .dw-dialog__close:focus-visible{outline:none;box-shadow:0 0 0 2px var(--dw-surface),0 0 0 4px var(--dw-ring)}
+  .dw-dialog__close svg{width:16px;height:16px}
+  .dw-dialog__body{font-size:14px;line-height:1.6;color:var(--dw-text-dim);margin:0 0 22px}
+  .dw-dialog__actions{display:flex;gap:12px;justify-content:flex-end}
+</style>
+</head>
+<body>
+<div class="dw-wrap">
+  <h1>Modal accesible</h1>
+  <p class="dw-sub">role="dialog" + aria-modal="true". Cierra con el backdrop, el botón ✕, el botón Cancelar o la tecla Esc. Animación de entrada (fade + pop).</p>
+  <button class="dw-btn dw-btn--primary" id="dw-open" aria-haspopup="dialog">Abrir confirmación</button>
+</div>
+
+<!-- Overlay -->
+<div class="dw-modal" id="dw-modal">
+  <div class="dw-dialog" role="dialog" aria-modal="true" aria-labelledby="dw-modal-title" aria-describedby="dw-modal-desc">
+    <div class="dw-dialog__head">
+      <h2 class="dw-dialog__title" id="dw-modal-title">Confirmar pedido</h2>
+      <button class="dw-dialog__close" data-dw-close aria-label="Cerrar diálogo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <p class="dw-dialog__body" id="dw-modal-desc">Vas a confirmar la compra de 1 frasco de Melena de León (120 cápsulas). ¿Deseas continuar con el pedido?</p>
+    <div class="dw-dialog__actions">
+      <button class="dw-btn dw-btn--ghost" data-dw-close>Cancelar</button>
+      <button class="dw-btn dw-btn--primary" data-dw-close>Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var modal=document.getElementById('dw-modal');
+    var openBtn=document.getElementById('dw-open');
+    var lastFocused=null;
+
+    function getFocusable(){
+      return modal.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+    }
+    function open(){
+      lastFocused=document.activeElement;
+      modal.classList.add('is-open');
+      var f=getFocusable();
+      if(f.length) f[0].focus();
+      document.addEventListener('keydown',onKey);
+    }
+    function close(){
+      modal.classList.remove('is-open');
+      document.removeEventListener('keydown',onKey);
+      if(lastFocused) lastFocused.focus();
+    }
+    function onKey(e){
+      if(e.key==='Escape'){ close(); return; }
+      if(e.key==='Tab'){ // focus trap
+        var f=getFocusable(); if(!f.length) return;
+        var first=f[0], last=f[f.length-1];
+        if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); }
+      }
+    }
+
+    openBtn.addEventListener('click',open);
+    // Cerrar al clicar el backdrop (fuera del diálogo)
+    modal.addEventListener('mousedown',function(e){ if(e.target===modal) close(); });
+    modal.querySelectorAll('[data-dw-close]').forEach(function(b){ b.addEventListener('click',close); });
+  })();
+</script>
+</body>
+</html>

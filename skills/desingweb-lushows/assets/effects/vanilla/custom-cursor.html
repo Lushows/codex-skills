@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Cursor — lerp + blend</title>
+<!--
+  CURSOR PERSONALIZADO
+  - Punto exacto que sigue el ratón al instante.
+  - Anillo grande que sigue con lerp (interpolación) → lag suave.
+  - Crece sobre cualquier [data-cursor]; mix-blend-mode: difference.
+  - Solo se activa en (pointer:fine). Respeta prefers-reduced-motion
+    (sin lerp loop: el anillo sigue exacto, sin animación de inercia).
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;900&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0c0c0e; --fg:#f5f5f7; --muted:#86868b; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:var(--bg); color:var(--fg); font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  body{ min-height:100vh; }
+
+  .has-cursor{ cursor:none; }              /* ocultar cursor nativo sólo si lo reemplazamos */
+  .has-cursor a, .has-cursor button{ cursor:none; }
+
+  /* Elementos del cursor */
+  .cur-ring, .cur-dot{ position:fixed; top:0; left:0; border-radius:50%; pointer-events:none; z-index:9999; mix-blend-mode:difference; will-change:transform; }
+  .cur-ring{ width:42px; height:42px; border:1.5px solid #fff; transform:translate(-50%,-50%); transition:width .3s ease, height .3s ease, background-color .3s ease, border-color .3s ease; }
+  .cur-dot{ width:6px; height:6px; background:#fff; transform:translate(-50%,-50%); }
+  .cur-ring.is-hover{ width:88px; height:88px; background:#fff; border-color:transparent; }
+
+  /* Layout demo */
+  header{ padding:3rem 6vw; display:flex; justify-content:space-between; align-items:center; }
+  .logo{ font-weight:900; letter-spacing:-.03em; font-size:1.3rem; }
+  nav a{ color:var(--muted); text-decoration:none; margin-left:2rem; }
+  .hero{ min-height:78vh; display:grid; place-items:center; text-align:center; padding:0 6vw; }
+  .hero h1{ font-size:clamp(2.6rem,9vw,7rem); font-weight:900; letter-spacing:-.04em; line-height:.95; }
+  .hero p{ color:var(--muted); margin-top:1.4rem; }
+  .row{ display:flex; gap:1.2rem; flex-wrap:wrap; justify-content:center; margin-top:2.6rem; }
+  .btn{ padding:1rem 2.2rem; border-radius:999px; border:1px solid #2a2a30; background:transparent; color:var(--fg); font-size:1rem; }
+  .btn.solid{ background:var(--fg); color:var(--bg); border-color:var(--fg); }
+  .gallery{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.2rem; padding:6vh 6vw 14vh; }
+  .tile{ aspect-ratio:4/5; border-radius:18px; overflow:hidden; }
+  .tile img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hint{ text-align:center; color:var(--muted); padding-bottom:6vh; font-size:.85rem; }
+</style>
+</head>
+<body>
+  <div class="cur-ring" data-ring></div>
+  <div class="cur-dot" data-dot></div>
+
+  <header>
+    <div class="logo" data-cursor>STUDIO°</div>
+    <nav>
+      <a href="#" data-cursor>Trabajo</a>
+      <a href="#" data-cursor>Sobre</a>
+      <a href="#" data-cursor>Contacto</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1 data-cursor>Mueve el ratón</h1>
+      <p>El anillo te sigue con inercia · crece sobre lo interactivo</p>
+      <div class="row">
+        <button class="btn solid" data-cursor>Ver proyectos</button>
+        <button class="btn" data-cursor>Reel 2026</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery">
+    <div class="tile" data-cursor><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600&q=80&auto=format&fit=crop" alt=""></div>
+    <div class="tile" data-cursor><img src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=600&q=80&auto=format&fit=crop" alt=""></div>
+    <div class="tile" data-cursor><img src="https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=600&q=80&auto=format&fit=crop" alt=""></div>
+  </section>
+
+  <div class="hint">Pasa sobre títulos, botones e imágenes [data-cursor]</div>
+
+<script>
+(function(){
+  const fine = window.matchMedia('(pointer:fine)').matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ring = document.querySelector('[data-ring]');
+  const dot  = document.querySelector('[data-dot]');
+
+  // En táctil/sin puntero fino: ocultamos el cursor custom y dejamos el nativo.
+  if (!fine){ ring.style.display='none'; dot.style.display='none'; return; }
+
+  document.body.classList.add('has-cursor');
+
+  // Posición objetivo (ratón) y posición interpolada del anillo.
+  let mx = window.innerWidth/2, my = window.innerHeight/2;
+  let rx = mx, ry = my;
+
+  window.addEventListener('mousemove', (e)=>{
+    mx = e.clientX; my = e.clientY;
+    // El punto sigue exacto (siempre).
+    dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    if (reduce){ // sin inercia: anillo exacto también
+      ring.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+    }
+  }, { passive:true });
+
+  // Loop de interpolación (lerp) sólo si hay movimiento permitido.
+  if (!reduce){
+    const lerp = (a,b,n)=> a + (b-a)*n;
+    (function raf(){
+      rx = lerp(rx, mx, 0.15);
+      ry = lerp(ry, my, 0.15);
+      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(raf);
+    })();
+  }
+
+  // Hover: el anillo crece sobre cualquier [data-cursor].
+  document.querySelectorAll('[data-cursor]').forEach((el)=>{
+    el.addEventListener('mouseenter', ()=> ring.classList.add('is-hover'));
+    el.addEventListener('mouseleave', ()=> ring.classList.remove('is-hover'));
+  });
+})();
+</script>
+</body>
+</html>

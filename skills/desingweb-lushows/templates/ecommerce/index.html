@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BIO-SETA · Hongos Funcionales de Alta Pureza</title>
+<meta name="description" content="Melena de León, Cordyceps y Reishi de grado premium. Extractos de doble vía, trazabilidad de lote y potencia certificada." />
+<!-- Fuentes reales: Cormorant Garamond (display luxury) + Jost (body grotesk fino) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap');
+
+/* ============ TOKENS — Paleta "Noir Gold" (luxury, negro profundo + oro mate) ============ */
+:root{
+  --c-black:#0B0B0C;
+  --color-bg:#0B0B0C;
+  --color-surface:#151517;
+  --color-surface-2:#1E1E21;
+  --color-border:#2C2C30;
+  --color-text:#F5F2EA;
+  --color-text-muted:#B6B0A1;
+  --color-text-inv:#0B0B0C;
+  --color-accent:#C8A04B;       /* oro mate */
+  --color-accent-2:#E6CE8E;     /* oro claro / glow */
+  --color-muted:#6E6857;
+  --color-spore:#7C8B6F;        /* verde salvia, guiño botánico */
+
+  --radius:4px;
+  --radius-lg:10px;
+  --maxw:1240px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+
+  --step-1:.78rem; --step0:1rem; --step1:1.25rem; --step2:1.6rem;
+  --step3:2.2rem;  --step4:3.2rem;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--color-bg);
+  color:var(--color-text);
+  font-family:'Jost',sans-serif;
+  font-weight:300;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,.display{font-family:'Cormorant Garamond',serif;font-weight:500;line-height:1.04;letter-spacing:-.01em}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px;border-radius:2px}
+
+.eyebrow{
+  font-family:'Jost',sans-serif;font-weight:500;font-size:var(--step-1);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--color-accent);
+}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(1.2rem,4vw,2.5rem)}
+
+/* ============ NAVBAR ============ */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(11,11,12,.72);
+  backdrop-filter:blur(16px) saturate(1.2);
+  border-bottom:1px solid var(--color-border);
+}
+.nav__inner{display:flex;align-items:center;justify-content:space-between;height:74px}
+.brand{display:flex;align-items:center;gap:.7rem;font-family:'Cormorant Garamond',serif;font-size:1.55rem;letter-spacing:.02em}
+.brand__mark{
+  width:30px;height:30px;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,var(--color-accent-2),var(--color-accent) 55%,#8a6c2c 100%);
+  box-shadow:0 0 0 1px rgba(230,206,142,.35),0 4px 14px -4px rgba(200,160,75,.6);
+}
+.brand b{font-weight:600}
+.nav__links{display:flex;gap:2.2rem;font-size:.92rem;letter-spacing:.04em;color:var(--color-text-muted)}
+.nav__links a{transition:color .25s var(--ease)}
+.nav__links a:hover{color:var(--color-text)}
+.nav__right{display:flex;align-items:center;gap:1.4rem}
+.cart-btn{
+  position:relative;display:flex;align-items:center;gap:.5rem;
+  font-size:.86rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.55rem .95rem;border:1px solid var(--color-border);border-radius:var(--radius);
+  transition:border-color .25s var(--ease),background .25s var(--ease);
+}
+.cart-btn:hover{border-color:var(--color-accent);background:var(--color-surface)}
+.cart-count{
+  min-width:20px;height:20px;padding:0 5px;border-radius:10px;
+  background:var(--color-accent);color:var(--color-text-inv);
+  font-size:.72rem;font-weight:600;display:grid;place-items:center;
+  font-variant-numeric:tabular-nums;
+}
+@media(max-width:760px){.nav__links{display:none}}
+
+/* ============ HERO ============ */
+.hero{position:relative;overflow:hidden;padding-block:clamp(3.5rem,9vw,7rem)}
+.hero::before{
+  content:"";position:absolute;inset:-30% -10% auto auto;width:60vw;height:60vw;
+  background:
+    radial-gradient(38% 38% at 70% 30%,rgba(200,160,75,.30),transparent 70%),
+    radial-gradient(40% 40% at 30% 70%,rgba(124,139,111,.18),transparent 70%);
+  filter:blur(60px);pointer-events:none;
+}
+.hero__grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+.hero h1{font-size:clamp(2.8rem,7vw,5.6rem);margin:1.1rem 0 1.3rem}
+.hero h1 em{font-style:italic;color:var(--color-accent-2)}
+.hero__lead{max-width:46ch;color:var(--color-text-muted);font-size:1.08rem}
+.hero__cta{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  padding:.95rem 1.6rem;border-radius:var(--radius);
+  font-size:.86rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+  transition:transform .3s var(--ease),background .3s var(--ease),color .3s var(--ease);
+}
+.btn--gold{background:var(--color-accent);color:var(--color-text-inv)}
+.btn--gold:hover{transform:translateY(-2px);background:var(--color-accent-2)}
+.btn--ghost{border:1px solid var(--color-border);color:var(--color-text)}
+.btn--ghost:hover{border-color:var(--color-accent);color:var(--color-accent-2)}
+
+.hero__visual{
+  position:relative;aspect-ratio:4/5;border-radius:var(--radius-lg);
+  background:
+    radial-gradient(60% 50% at 30% 25%,rgba(230,206,142,.35),transparent 60%),
+    linear-gradient(155deg,#2a2620 0%,#171512 45%,#0d0c0a 100%);
+  border:1px solid var(--color-border);overflow:hidden;
+  display:flex;align-items:flex-end;padding:1.8rem;
+}
+.hero__visual::after{
+  content:"";position:absolute;inset:0;
+  background:repeating-radial-gradient(circle at 50% 38%,rgba(200,160,75,.07) 0,rgba(200,160,75,.07) 1px,transparent 1px,transparent 13px);
+  opacity:.55;mix-blend-mode:screen;
+}
+.hero__visual .tag{
+  position:relative;z-index:1;background:rgba(11,11,12,.55);backdrop-filter:blur(8px);
+  border:1px solid var(--color-border);border-radius:var(--radius);
+  padding:.85rem 1.1rem;font-size:.82rem;color:var(--color-text-muted);letter-spacing:.04em;
+}
+.hero__visual .tag b{color:var(--color-text);font-weight:500}
+.hero__metrics{display:flex;gap:2rem;margin-top:2.6rem;border-top:1px solid var(--color-border);padding-top:1.6rem}
+.metric .n{font-family:'Cormorant Garamond',serif;font-size:2.1rem;color:var(--color-accent-2);font-variant-numeric:tabular-nums}
+.metric .l{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted)}
+@media(max-width:820px){.hero__grid{grid-template-columns:1fr}.hero__visual{aspect-ratio:16/12}}
+
+/* ============ SECTION HEAD ============ */
+.section{padding-block:clamp(3.5rem,7vw,6rem)}
+.section__head{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;margin-bottom:2.8rem;flex-wrap:wrap}
+.section__head h2{font-size:clamp(2.1rem,4.5vw,3.4rem)}
+.section__head p{color:var(--color-text-muted);max-width:42ch}
+
+/* ============ CATALOGO GRID ============ */
+.grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;
+}
+@media(max-width:920px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+
+.card{
+  position:relative;background:var(--color-surface);
+  border:1px solid var(--color-border);border-radius:var(--radius-lg);
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease);
+}
+.card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(200,160,75,.5);
+  box-shadow:0 24px 48px -24px rgba(0,0,0,.8),0 0 0 1px rgba(200,160,75,.12);
+}
+.card__media{
+  position:relative;aspect-ratio:1/1;overflow:hidden;
+}
+.card__media .ph{position:absolute;inset:0}
+.card__media .grain{
+  position:absolute;inset:0;
+  background:repeating-radial-gradient(circle at 50% 42%,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent 11px);
+  mix-blend-mode:screen;opacity:.5;
+}
+/* placeholders por producto (color/gradiente CSS, sin imagen externa) */
+.ph--melena{background:radial-gradient(70% 60% at 35% 30%,#efe6cf,transparent 60%),linear-gradient(150deg,#b8a572,#6e6244 60%,#3a3526)}
+.ph--cordyceps{background:radial-gradient(70% 60% at 35% 30%,#ffc98a,transparent 60%),linear-gradient(150deg,#d98a3f,#9c5526 60%,#3c2616)}
+.ph--reishi{background:radial-gradient(70% 60% at 35% 30%,#caa1a1,transparent 60%),linear-gradient(150deg,#7e3d3d,#4d2222 60%,#23110f)}
+.ph--combo{background:radial-gradient(70% 60% at 35% 30%,#b6c3a6,transparent 60%),linear-gradient(150deg,#7c8b6f,#4a5641 60%,#232a1d)}
+.ph--polvo{background:radial-gradient(70% 60% at 35% 30%,#e7e0cb,transparent 60%),linear-gradient(150deg,#a89c7c,#6a6048 60%,#312c1e)}
+.ph--kit{background:radial-gradient(70% 60% at 35% 30%,#bda7d0,transparent 60%),linear-gradient(150deg,#6f5a8b,#42345a 60%,#1d182b)}
+
+.badge{
+  position:absolute;top:14px;left:14px;z-index:2;
+  background:var(--color-accent);color:var(--color-text-inv);
+  font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.3rem .6rem;border-radius:var(--radius);
+}
+.badge--soft{background:rgba(124,139,111,.92);color:#fff}
+
+/* quick-view aparece en hover */
+.quick{
+  position:absolute;left:14px;right:14px;bottom:14px;z-index:2;
+  display:flex;justify-content:center;
+  opacity:0;transform:translateY(12px);
+  transition:opacity .35s var(--ease),transform .35s var(--ease);
+}
+.card:hover .quick{opacity:1;transform:translateY(0)}
+.quick button{
+  width:100%;padding:.7rem;background:rgba(11,11,12,.82);backdrop-filter:blur(8px);
+  border:1px solid rgba(230,206,142,.4);border-radius:var(--radius);color:var(--color-accent-2);
+  font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+  transition:background .25s var(--ease);
+}
+.quick button:hover{background:var(--color-accent);color:var(--color-text-inv)}
+
+.card__body{padding:1.25rem 1.3rem 1.4rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+.card__kicker{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--color-spore)}
+.card__title{font-size:1.5rem;line-height:1.1}
+.card__desc{font-size:.88rem;color:var(--color-text-muted);flex:1}
+.card__foot{display:flex;align-items:center;justify-content:space-between;margin-top:.7rem}
+.price{display:flex;flex-direction:column}
+.price .now{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--color-text);font-variant-numeric:tabular-nums}
+.price .was{font-size:.8rem;color:var(--color-muted);text-decoration:line-through;font-variant-numeric:tabular-nums}
+.add{
+  display:flex;align-items:center;gap:.45rem;
+  padding:.6rem 1rem;border:1px solid var(--color-border);border-radius:var(--radius);
+  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text);
+  transition:background .25s var(--ease),border-color .25s var(--ease),color .25s var(--ease);
+}
+.add:hover{background:var(--color-accent);border-color:var(--color-accent);color:var(--color-text-inv)}
+
+/* ============ FICHA DESTACADA ============ */
+.feature{
+  background:linear-gradient(165deg,var(--color-surface) 0%,#101012 100%);
+  border:1px solid var(--color-border);border-radius:var(--radius-lg);
+  display:grid;grid-template-columns:.9fr 1.1fr;overflow:hidden;
+}
+.feature__media{
+  position:relative;min-height:420px;
+  background:radial-gradient(60% 55% at 30% 28%,rgba(230,206,142,.4),transparent 60%),linear-gradient(150deg,#7e3d3d,#3a1b1b 55%,#160c0c);
+}
+.feature__media::after{
+  content:"";position:absolute;inset:0;
+  background:repeating-radial-gradient(circle at 50% 40%,rgba(255,255,255,.06) 0,rgba(255,255,255,.06) 1px,transparent 1px,transparent 13px);
+  mix-blend-mode:screen;opacity:.5;
+}
+.feature__media .fbadge{
+  position:absolute;top:18px;left:18px;background:var(--color-accent);color:var(--color-text-inv);
+  font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.35rem .7rem;border-radius:var(--radius);
+}
+.feature__body{padding:clamp(1.8rem,4vw,3rem)}
+.feature__body h3{font-size:clamp(2rem,4vw,3rem);margin:.6rem 0 1rem}
+.feature__body .lead{color:var(--color-text-muted);max-width:48ch;margin-bottom:1.6rem}
+.specs{list-style:none;display:grid;gap:.7rem;margin-bottom:1.8rem}
+.specs li{display:flex;gap:.8rem;align-items:baseline;font-size:.92rem;color:var(--color-text)}
+.specs li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--color-accent);flex:none;transform:translateY(-1px)}
+.specs li span{color:var(--color-text-muted)}
+.feature__buy{display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;border-top:1px solid var(--color-border);padding-top:1.6rem}
+.feature__buy .price .now{font-size:2.1rem}
+@media(max-width:820px){.feature{grid-template-columns:1fr}.feature__media{min-height:300px}}
+
+/* ============ ASSURANCE STRIP ============ */
+.assure{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;border-block:1px solid var(--color-border);padding-block:2.4rem}
+.assure div{display:flex;flex-direction:column;gap:.35rem}
+.assure b{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--color-accent-2)}
+.assure span{font-size:.86rem;color:var(--color-text-muted)}
+@media(max-width:760px){.assure{grid-template-columns:repeat(2,1fr)}}
+
+/* ============ FOOTER ============ */
+.footer{border-top:1px solid var(--color-border);padding-block:3.5rem 2.5rem;margin-top:2rem}
+.footer__top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2rem}
+.footer h4{font-family:'Jost',sans-serif;font-weight:500;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--color-text-muted);margin-bottom:1rem}
+.footer ul{list-style:none;display:grid;gap:.6rem}
+.footer a{font-size:.92rem;color:var(--color-text-muted);transition:color .25s var(--ease)}
+.footer a:hover{color:var(--color-accent-2)}
+.footer__brand p{color:var(--color-text-muted);max-width:34ch;font-size:.92rem;margin-top:.9rem}
+.footer__bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:2.6rem;border-top:1px solid var(--color-border);padding-top:1.6rem;font-size:.82rem;color:var(--color-muted)}
+@media(max-width:760px){.footer__top{grid-template-columns:1fr 1fr}}
+
+/* ============ CARRITO (DRAWER) ============ */
+.overlay{
+  position:fixed;inset:0;z-index:90;background:rgba(5,5,6,.62);
+  backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s var(--ease);
+}
+.overlay.open{opacity:1;visibility:visible}
+.drawer{
+  position:fixed;top:0;right:0;z-index:100;height:100dvh;width:min(420px,92vw);
+  background:var(--color-surface);border-left:1px solid var(--color-border);
+  display:flex;flex-direction:column;
+  transform:translateX(105%);transition:transform .45s var(--ease);
+  box-shadow:-30px 0 60px -30px rgba(0,0,0,.85);
+}
+.drawer.open{transform:translateX(0)}
+.drawer__head{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 1.6rem;border-bottom:1px solid var(--color-border)}
+.drawer__head h3{font-size:1.7rem}
+.drawer__head .cnt{font-size:.82rem;color:var(--color-text-muted);letter-spacing:.05em}
+.x{width:38px;height:38px;border:1px solid var(--color-border);border-radius:var(--radius);font-size:1.1rem;transition:border-color .25s var(--ease)}
+.x:hover{border-color:var(--color-accent)}
+.drawer__items{flex:1;overflow-y:auto;padding:1rem 1.6rem;display:flex;flex-direction:column;gap:1rem}
+.empty{text-align:center;color:var(--color-text-muted);margin:auto;padding:2rem;font-size:.95rem}
+.empty span{display:block;font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--color-text);margin-bottom:.4rem}
+.line{display:flex;gap:1rem;align-items:center}
+.line__thumb{width:62px;height:62px;border-radius:var(--radius);flex:none;border:1px solid var(--color-border)}
+.line__info{flex:1;min-width:0}
+.line__info b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:500}
+.line__info small{color:var(--color-text-muted);font-size:.8rem}
+.qty{display:flex;align-items:center;gap:.55rem;margin-top:.4rem}
+.qty button{width:24px;height:24px;border:1px solid var(--color-border);border-radius:3px;font-size:.9rem;line-height:1;transition:border-color .2s var(--ease)}
+.qty button:hover{border-color:var(--color-accent)}
+.qty span{font-variant-numeric:tabular-nums;min-width:18px;text-align:center;font-size:.9rem}
+.line__price{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--color-accent-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.drawer__foot{border-top:1px solid var(--color-border);padding:1.4rem 1.6rem 1.7rem;display:grid;gap:1rem}
+.subtotal{display:flex;justify-content:space-between;align-items:baseline}
+.subtotal .l{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-muted)}
+.subtotal .v{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--color-text);font-variant-numeric:tabular-nums}
+.checkout{width:100%;padding:1rem;background:var(--color-accent);color:var(--color-text-inv);border-radius:var(--radius);font-size:.86rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:background .25s var(--ease)}
+.checkout:hover{background:var(--color-accent-2)}
+.ship-note{font-size:.78rem;color:var(--color-text-muted);text-align:center;letter-spacing:.03em}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#"><span class="brand__mark" aria-hidden="true"></span>BIO<b>·SETA</b></a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#destacado">Melena de León</a>
+      <a href="#ciencia">Ciencia</a>
+      <a href="#footer">Contacto</a>
+    </nav>
+    <div class="nav__right">
+      <button class="cart-btn" id="openCart" aria-label="Abrir carrito de compras">
+        Carrito <span class="cart-count" id="navCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="eyebrow">Hongos funcionales · Grado farmacéutico</p>
+      <h1>Claridad mental,<br><em>cultivada</em> con rigor.</h1>
+      <p class="hero__lead">Extractos de doble vía estandarizados por beta-glucanos. Cultivo propio en Colombia, trazabilidad de lote y certificado de análisis en cada frasco. Nada de micelio sobre grano: solo cuerpo fructífero real.</p>
+      <div class="hero__cta">
+        <a href="#catalogo" class="btn btn--gold">Ver catálogo</a>
+        <a href="#destacado" class="btn btn--ghost">Conocer la Melena</a>
+      </div>
+      <div class="hero__metrics">
+        <div class="metric"><div class="n">30%</div><div class="l">Beta-glucanos</div></div>
+        <div class="metric"><div class="n">8:1</div><div class="l">Concentración</div></div>
+        <div class="metric"><div class="n">100%</div><div class="l">Cuerpo fructífero</div></div>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="tag"><b>Lote BS-2406</b> — Hericium erinaceus · Análisis HPLC verificado · Cosecha mayo 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CATALOGO GRID ===================== -->
+<section class="section" id="catalogo">
+  <div class="wrap">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">La colección</p>
+        <h2>Catálogo de extractos</h2>
+      </div>
+      <p>Cada presentación se dosifica para una intención: foco, energía o calma profunda. Precios en pesos colombianos (COP).</p>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Card 1 -->
+      <article class="card">
+        <div class="card__media">
+          <div class="ph ph--melena"></div><div class="grain"></div>
+          <span class="badge">-18%</span>
+          <div class="quick"><button data-quick="melena">Vista rápida</button></div>
+        </div>
+        <div class="card__body">
+          <p class="card__kicker">Hericium erinaceus</p>
+          <h3 class="card__title">Melena de León · Cápsulas</h3>
+          <p class="card__desc">120 cápsulas · 250 mg. Soporte cognitivo y de memoria. Estandarizada al 30% de beta-glucanos.</p>
+          <div class="card__foot">
+            <div class="price"><span class="now">$129.900</span><span class="was">$158.000</span></div>
+            <button class="add" data-id="melena" data-name="Melena de León · Cápsulas" data-price="129900" data-ph="ph--melena">Añadir +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card">
+        <div class="card__media">
+          <div class="ph ph--cordyceps"></div><div class="grain"></div>
+          <span class="badge">-15%</span>
+          <div class="quick"><button data-quick="cordyceps">Vista rápida</button></div>
+        </div>
+        <div class="card__body">
+          <p class="card__kicker">Cordyceps militaris</p>
+          <h3 class="card__title">Cordyceps · Cápsulas</h3>
+          <p class="card__desc">120 cápsulas · 250 mg. Energía sostenida y rendimiento físico. Rico en cordicepina y adenosina.</p>
+          <div class="card__foot">
+            <div class="price"><span class="now">$139.900</span><span class="was">$164.000</span></div>
+            <button class="add" data-id="cordyceps" data-name="Cordyceps · Cápsulas" data-price="139900" data-ph="ph--cordyceps">Añadir +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card">
+        <div class="card__media">
+          <div class="ph ph--reishi"></div><div class="grain"></div>
+          <span class="badge">-12%</span>
+          <div class="quick"><button data-quick="reishi">Vista rápida</button></div>
+        </div>
+        <div class="card__body">
+          <p class="card__kicker">Ganoderma lucidum</p>
+          <h3 class="card__title">Reishi · Cápsulas</h3>
+          <p class="card__desc">120 cápsulas · 250 mg. Calma, sueño reparador y equilibrio inmune. El "hongo de la inmortalidad".</p>
+          <div class="card__foot">
+            <div class="price"><span class="now">$134.900</span><span class="was">$152.000</span></div>
+            <button class="add" data-id="reishi" data-name="Reishi · Cápsulas" data-price="134900" data-ph="ph--reishi">Añadir +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="card">
+        <div class="card__media">
+          <div class="ph ph--polvo"></div><div class="grain"></div>
+          <span class="badge badge--soft">Nuevo</span>
+          <div class="quick"><button data-quick="polvo">Vista rápida</button></div>
+        </div>
+        <div class="card__body">
+          <p class="card__kicker">Polvo soluble</p>
+          <h3 class="card__title">Melena de León · Polvo 30 g</h3>
+          <p class="card__desc">Extracto en polvo para café o smoothies. 30 porciones. Sabor terroso suave, disuelve sin grumos.</p>
+          <div class="card__foot">
+            <div class="price"><span class="now">$98.900</span></div>
+            <button class="add" data-id="polvo" data-name="Melena · Polvo 30g" data-price="98900" data-ph="ph--polvo">Añadir +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 (combo) -->
+      <article class="card">
+        <div class="card__media">
+          <div class="ph ph--combo"></div><div class="grain"></div>
+          <span class="badge">-25%</span>
+          <div class="quick"><button data-quick="combo">Vista rápida</button></div>
+        </div>
+        <div class="card__body">
+          <p class="card__kicker">Trío sinérgico</p>
+          <h3 class="card__title">Combo Triada · 3 frascos</h3>
+          <p class="card__desc">Melena + Cordyceps + Reishi. El protocolo completo de mañana, tarde y noche. Ahorra frente a comprar suelto.</p>
+          <div class="card__foot">
+            <div class="price"><span class="now">$339.900</span><span class="was">$452.000</span></div>
+            <button class="add" data-id="combo" data-name="Combo Triada · 3 frascos" data-price="339900" data-ph="ph--combo">Añadir +</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 6 (kit laboratorio) -->
+      <article class="card">
+        <div class="card__media">
+          <div class="ph ph--kit"></div><div class="grain"></div>
+          <span class="badge badge--soft">Lab</span>
+          <div class="quick"><button data-quick="kit">Vista rápida</button></div>
+        </div>
+        <div class="card__body">
+          <p class="card__kicker">Equipo de cultivo</p>
+          <h3 class="card__title">Kit de Cultivo Casero</h3>
+          <p class="card__desc">Sustrato esterilizado + jeringa de cultivo de Melena de León. Tu primera cosecha en 14 días. Guía incluida.</p>
+          <div class="card__foot">
+            <div class="price"><span class="now">$179.900</span></div>
+            <button class="add" data-id="kit" data-name="Kit de Cultivo Casero" data-price="179900" data-ph="ph--kit">Añadir +</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FICHA DESTACADA ===================== -->
+<section class="section" id="destacado">
+  <div class="wrap">
+    <div class="feature">
+      <div class="feature__media" aria-hidden="true"><span class="fbadge">Más vendido</span></div>
+      <div class="feature__body">
+        <p class="eyebrow">Producto del mes</p>
+        <h3>Reishi Dual-Extract Premium</h3>
+        <p class="lead">Extracción de doble vía (agua + alcohol) sobre cuerpo fructífero entero de <em>Ganoderma lucidum</em>. Captura tanto los triterpenos liposolubles como los polisacáridos hidrosolubles que un solo método deja fuera.</p>
+        <ul class="specs">
+          <li>Beta-glucanos verificados <span>— mínimo 28% por HPLC independiente</span></li>
+          <li>Triterpenos amargos <span>— marcador de potencia real, no relleno</span></li>
+          <li>Sin micelio ni granos <span>— 100% sombrero fructífero</span></li>
+          <li>Vegano y libre de excipientes <span>— solo el extracto, en cápsula vegetal</span></li>
+        </ul>
+        <div class="feature__buy">
+          <div class="price"><span class="now">$134.900</span><span class="was">$152.000 COP</span></div>
+          <button class="add btn--gold" style="padding:.95rem 1.6rem" data-id="reishi-premium" data-name="Reishi Dual-Extract Premium" data-price="134900" data-ph="ph--reishi">Añadir al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ASSURANCE STRIP ===================== -->
+<section class="section" id="ciencia" style="padding-block:0">
+  <div class="wrap">
+    <div class="assure">
+      <div><b>Envío 48 h</b><span>Despacho gratis desde $200.000 a toda Colombia.</span></div>
+      <div><b>Certificado de análisis</b><span>Cada lote con su COA descargable por QR.</span></div>
+      <div><b>Garantía 30 días</b><span>Si no sientes el cambio, te devolvemos el dinero.</span></div>
+      <div><b>Cultivo propio</b><span>Trazabilidad de la espora al frasco, sin intermediarios.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="brand" href="#"><span class="brand__mark" aria-hidden="true"></span>BIO<b>·SETA</b></a>
+        <p>Hongos funcionales de alta pureza, cultivados y extraídos en Colombia para mentes que no se conforman.</p>
+      </div>
+      <div>
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="#catalogo">Melena de León</a></li>
+          <li><a href="#catalogo">Cordyceps</a></li>
+          <li><a href="#catalogo">Reishi</a></li>
+          <li><a href="#catalogo">Combos</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Saber más</h4>
+        <ul>
+          <li><a href="#ciencia">Cómo extraemos</a></li>
+          <li><a href="#ciencia">Certificados</a></li>
+          <li><a href="#destacado">Guía de dosis</a></li>
+          <li><a href="#footer">Blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="#">WhatsApp · Addrian</a></li>
+          <li><a href="mailto:hola@bio-seta.co">hola@bio-seta.co</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Mayoristas</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 BIO-SETA. Estos productos no pretenden diagnosticar ni curar enfermedades.</span>
+      <span>Hecho en Colombia · Pagos seguros</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== CARRITO: OVERLAY + DRAWER ===================== -->
+<div class="overlay" id="overlay" tabindex="-1"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Carrito de compras">
+  <div class="drawer__head">
+    <div>
+      <h3>Tu carrito</h3>
+      <span class="cnt" id="drawerCount">0 productos</span>
+    </div>
+    <button class="x" id="closeCart" aria-label="Cerrar carrito">✕</button>
+  </div>
+  <div class="drawer__items" id="items">
+    <div class="empty" id="empty"><span>Aún vacío</span>Añade un extracto para empezar tu protocolo.</div>
+  </div>
+  <div class="drawer__foot">
+    <div class="subtotal">
+      <span class="l">Subtotal</span>
+      <span class="v" id="subtotal">$0</span>
+    </div>
+    <button class="checkout">Finalizar compra</button>
+    <p class="ship-note">Envío gratis al superar $200.000 COP</p>
+  </div>
+</aside>
+
+<!-- ===================== JS: ESTADO DEL CARRITO ===================== -->
+<script>
+(function(){
+  // Estado simple en memoria: { id: {name, price, ph, qty} }
+  var cart = {};
+
+  var fmt = function(n){ return '$' + n.toLocaleString('es-CO'); };
+
+  var els = {
+    overlay:  document.getElementById('overlay'),
+    drawer:   document.getElementById('drawer'),
+    items:    document.getElementById('items'),
+    empty:    document.getElementById('empty'),
+    navCount: document.getElementById('navCount'),
+    drawerCount: document.getElementById('drawerCount'),
+    subtotal: document.getElementById('subtotal')
+  };
+
+  function openCart(){ els.drawer.classList.add('open'); els.overlay.classList.add('open'); }
+  function closeCart(){ els.drawer.classList.remove('open'); els.overlay.classList.remove('open'); }
+
+  document.getElementById('openCart').addEventListener('click', openCart);
+  document.getElementById('closeCart').addEventListener('click', closeCart);
+  els.overlay.addEventListener('click', closeCart);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeCart(); });
+
+  function totalItems(){
+    var t = 0; for(var k in cart){ t += cart[k].qty; } return t;
+  }
+  function totalPrice(){
+    var t = 0; for(var k in cart){ t += cart[k].qty * cart[k].price; } return t;
+  }
+
+  function render(){
+    var count = totalItems();
+    els.navCount.textContent = count;
+    els.drawerCount.textContent = count + (count === 1 ? ' producto' : ' productos');
+    els.subtotal.textContent = fmt(totalPrice());
+
+    // limpiar líneas previas
+    var lines = els.items.querySelectorAll('.line');
+    lines.forEach(function(l){ l.remove(); });
+
+    var ids = Object.keys(cart);
+    els.empty.style.display = ids.length ? 'none' : 'block';
+
+    ids.forEach(function(id){
+      var it = cart[id];
+      var line = document.createElement('div');
+      line.className = 'line';
+      line.innerHTML =
+        '<div class="line__thumb ' + it.ph + '"></div>' +
+        '<div class="line__info">' +
+          '<b>' + it.name + '</b>' +
+          '<small>' + fmt(it.price) + ' c/u</small>' +
+          '<div class="qty">' +
+            '<button data-act="dec" data-id="' + id + '" aria-label="Restar">−</button>' +
+            '<span>' + it.qty + '</span>' +
+            '<button data-act="inc" data-id="' + id + '" aria-label="Sumar">+</button>' +
+          '</div>' +
+        '</div>' +
+        '<div class="line__price">' + fmt(it.price * it.qty) + '</div>';
+      els.items.appendChild(line);
+    });
+  }
+
+  function addItem(id, name, price, ph){
+    if(cart[id]){ cart[id].qty++; }
+    else { cart[id] = { name:name, price:price, ph:ph, qty:1 }; }
+    render();
+    openCart();
+  }
+
+  // Botones "Añadir" (catálogo + ficha destacada)
+  document.querySelectorAll('.add').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      addItem(
+        btn.getAttribute('data-id'),
+        btn.getAttribute('data-name'),
+        parseInt(btn.getAttribute('data-price'), 10),
+        btn.getAttribute('data-ph')
+      );
+    });
+  });
+
+  // Vista rápida = añade el producto correspondiente de la misma card
+  document.querySelectorAll('[data-quick]').forEach(function(q){
+    q.addEventListener('click', function(){
+      var add = q.closest('.card').querySelector('.add');
+      if(add) add.click();
+    });
+  });
+
+  // Delegación: +/- en cada línea del carrito
+  els.items.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-act]');
+    if(!b) return;
+    var id = b.getAttribute('data-id');
+    if(!cart[id]) return;
+    if(b.getAttribute('data-act') === 'inc'){ cart[id].qty++; }
+    else { cart[id].qty--; if(cart[id].qty <= 0) delete cart[id]; }
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

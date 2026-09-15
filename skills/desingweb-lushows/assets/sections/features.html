@@ -1,0 +1,55 @@
+<!-- SECCIÓN: Features (bento dark, una destacada). Copia el <section> + <style>. -->
+<section class="dw-feat">
+  <header class="dw-feat__head">
+    <span class="dw-feat__eyebrow">Por qué BIO-SETA</span>
+    <h2 class="dw-feat__title">Extractos que sí hacen lo que prometen</h2>
+  </header>
+  <div class="dw-feat__grid">
+    <article class="dw-feat__card dw-feat__card--lead">
+      <span class="dw-feat__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 2 1 3 1 5h12c0-2 1-3 1-5a7 7 0 0 0-7-7Z"/><path d="M9 19h6"/><path d="M10 22h4"/></svg>
+      </span>
+      <h3 class="dw-feat__name">Doble extracción 30:1</h3>
+      <p class="dw-feat__desc">Agua y alcohol para capturar tanto los beta-glucanos como los triterpenos. La concentración que un té casero nunca alcanza, certificada lote a lote.</p>
+      <ul class="dw-feat__list">
+        <li>≥ 30% beta-glucanos verificados</li>
+        <li>Sin micelio de relleno ni almidón</li>
+      </ul>
+    </article>
+    <article class="dw-feat__card">
+      <span class="dw-feat__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </span>
+      <h3 class="dw-feat__name">Análisis de terceros</h3>
+      <p class="dw-feat__desc">Cada lote pasa por laboratorio independiente: metales pesados, pureza y potencia. El certificado va impreso en la caja.</p>
+    </article>
+    <article class="dw-feat__card">
+      <span class="dw-feat__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M12 7v5l3 2"/><path d="M3 12H1"/><path d="M5 7 3.5 5.5"/></svg>
+      </span>
+      <h3 class="dw-feat__name">Envío en 24-48h</h3>
+      <p class="dw-feat__desc">Despachamos desde Colombia con seguimiento. Si no notas diferencia en 30 días, te devolvemos el dinero.</p>
+    </article>
+  </div>
+</section>
+<style>
+  .dw-feat{background:#07120E;color:#E8F5EE;padding:6rem 1.5rem;font-family:system-ui,sans-serif}
+  .dw-feat__head{max-width:1080px;margin:0 auto 2.5rem}
+  .dw-feat__eyebrow{font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:#5B7A6B}
+  .dw-feat__title{margin:.6rem 0 0;font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.1;letter-spacing:-.02em;font-weight:700;max-width:20ch}
+  .dw-feat__grid{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+  .dw-feat__card{background:#0F1F18;border:1px solid #1C3328;border-radius:20px;padding:1.8rem;transition:transform .25s ease,border-color .25s ease}
+  .dw-feat__card:hover{transform:translateY(-4px);border-color:#34D39966}
+  .dw-feat__card--lead{grid-row:span 2;display:flex;flex-direction:column;background:linear-gradient(160deg,#102A20,#0F1F18 60%);padding:2.2rem}
+  .dw-feat__icon{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:13px;background:#34D39915;color:#34D399;margin-bottom:1rem}
+  .dw-feat__icon svg{width:24px;height:24px}
+  .dw-feat__card--lead .dw-feat__icon{width:54px;height:54px}
+  .dw-feat__card--lead .dw-feat__icon svg{width:28px;height:28px}
+  .dw-feat__name{margin:0 0 .5rem;font-size:1.2rem;font-weight:650;letter-spacing:-.01em}
+  .dw-feat__card--lead .dw-feat__name{font-size:1.6rem}
+  .dw-feat__desc{margin:0;color:#A7C3B5;font-size:.98rem;line-height:1.55}
+  .dw-feat__list{margin:1.3rem 0 0;padding:0;list-style:none;display:grid;gap:.55rem;border-top:1px solid #1C3328;padding-top:1.3rem}
+  .dw-feat__list li{position:relative;padding-left:1.5rem;color:#CFE6DA;font-size:.92rem}
+  .dw-feat__list li::before{content:"";position:absolute;left:0;top:.45em;width:7px;height:7px;border-radius:2px;background:#34D399}
+  @media (max-width:680px){.dw-feat__grid{grid-template-columns:1fr}.dw-feat__card--lead{grid-row:auto}}
+</style>

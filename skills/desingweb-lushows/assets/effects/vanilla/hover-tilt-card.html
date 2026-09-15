@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hover tilt card</title>
+<style>
+  :root{
+    --ease:cubic-bezier(.2,.8,.2,1);
+    --bg:#07120E; --surface:#0F1F18; --surface-2:#16291F; --border:#25382E;
+    --text:#E8F5EE; --muted:#A7BFB3; --accent:#34D399; --accent-2:#A7F3D0; --text-inv:#06231A;
+  }
+  *{margin:0;box-sizing:border-box}
+  body{
+    min-height:100vh;display:grid;place-items:center;padding:2rem;
+    background:
+      radial-gradient(60% 60% at 50% 40%, rgba(52,211,153,.10) 0%, transparent 65%),
+      var(--bg);
+    color:var(--text);font-family:"Space Grotesk",system-ui,sans-serif;
+  }
+  .scene{perspective:900px}
+  .card{
+    position:relative;width:min(340px,86vw);border-radius:20px;overflow:hidden;
+    background:linear-gradient(160deg,var(--surface-2),var(--surface));
+    border:1px solid var(--border);
+    padding:1.75rem;
+    transform:rotateX(0) rotateY(0);
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease);
+    transform-style:preserve-3d;will-change:transform;
+    box-shadow:0 20px 50px -20px rgba(0,0,0,.7);
+  }
+  .card:focus-visible{outline:2px solid var(--accent-2);outline-offset:4px}
+  /* Brillo que sigue el cursor (posición vía variables) */
+  .card .glow{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+    background:radial-gradient(180px 180px at var(--mx,50%) var(--my,50%),
+              rgba(167,243,208,.22) 0%, transparent 60%);
+    transition:opacity .3s var(--ease);
+  }
+  .card:hover .glow{opacity:1}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:.4rem;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent-2);transform:translateZ(40px);
+  }
+  .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+  .icon{
+    width:52px;height:52px;border-radius:14px;margin:1.25rem 0;
+    background:var(--surface);border:1px solid var(--border);
+    display:grid;place-items:center;color:var(--accent);
+    transform:translateZ(60px);
+  }
+  h2{font-size:1.5rem;letter-spacing:-.02em;line-height:1.1;transform:translateZ(50px)}
+  p{margin-top:.6rem;color:var(--muted);font-size:.96rem;line-height:1.55;transform:translateZ(28px)}
+  .meta{
+    margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;
+    font-size:.85rem;color:var(--muted);transform:translateZ(30px);
+  }
+  .meta b{color:var(--text);font-weight:600}
+  .hint{margin-top:1.5rem;text-align:center;color:var(--muted);font-size:.85rem}
+
+  @media (prefers-reduced-motion:reduce){
+    .card{transition:none !important}
+  }
+</style></head>
+<body>
+  <div>
+    <div class="scene">
+      <article class="card" id="card" tabindex="0">
+        <span class="glow" aria-hidden="true"></span>
+        <span class="badge">Emerald Lab</span>
+        <div class="icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9L12 2zM12 22V12M20 6.5L12 12 4 6.5"/></svg>
+        </div>
+        <h2>Tarjeta con tilt 3D</h2>
+        <p>El cursor inclina la card en perspectiva y mueve el brillo. Las capas internas tienen profundidad real con translateZ.</p>
+        <div class="meta"><span>Solo transform</span><b>60 fps</b></div>
+      </article>
+    </div>
+    <p class="hint">Mueve el cursor sobre la tarjeta</p>
+  </div>
+<script>
+(function(){
+  var card = document.getElementById('card');
+  var glow = card.querySelector('.glow');
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (reduce) return;
+
+  var MAX = 12; // grados máximos de inclinación
+  var raf = null, pending = null;
+
+  function apply(){
+    raf = null;
+    if (!pending) return;
+    var r = card.getBoundingClientRect();
+    var px = (pending.x - r.left) / r.width;   // 0..1
+    var py = (pending.y - r.top) / r.height;   // 0..1
+    var ry = (px - 0.5) * 2 * MAX;             // rotateY: izquierda/derecha
+    var rx = -(py - 0.5) * 2 * MAX;            // rotateX: arriba/abajo (invertido)
+    card.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+    glow.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+    glow.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+  }
+
+  card.addEventListener('mousemove', function(e){
+    pending = { x: e.clientX, y: e.clientY };
+    if (!raf) raf = requestAnimationFrame(apply);
+  });
+
+  card.addEventListener('mouseleave', function(){
+    pending = null;
+    card.style.transform = 'rotateX(0deg) rotateY(0deg)'; // vuelve suave por la transición CSS
+  });
+})();
+</script>
+</body></html>
